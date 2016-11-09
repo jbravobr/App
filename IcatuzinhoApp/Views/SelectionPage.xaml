@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TabbedPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="IcatuzinhoApp.SelectionPage"
+		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+        prism:ViewModelLocator.AutowireViewModel="True"
+		xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp">
+	
+	<NavigationPage>
+		<x:Arguments>
+    		<local:HomePage />
+		</x:Arguments>
+		<NavigationPage.Icon>
+			<OnPlatform x:TypeArguments="FileImageSource">
+				<OnPlatform.iOS>
+					house-full.png
+				</OnPlatform.iOS>
+			</OnPlatform>
+		</NavigationPage.Icon>    
+		<NavigationPage.Title>
+			<OnPlatform x:TypeArguments="x:String">
+				<OnPlatform.Android>
+					Home
+				</OnPlatform.Android>
+			</OnPlatform>
+		</NavigationPage.Title>
+	</NavigationPage>
+
+	<NavigationPage>
+		<x:Arguments>
+			<local:TravelPage />
+		</x:Arguments>
+		<NavigationPage.Icon>
+			<OnPlatform x:TypeArguments="FileImageSource">
+				<OnPlatform.iOS>
+					bus-full.png
+				</OnPlatform.iOS>
+			</OnPlatform>
+		</NavigationPage.Icon>    
+		<NavigationPage.Title>
+			<OnPlatform x:TypeArguments="x:String">
+				<OnPlatform.Android>
+					Itinerário
+				</OnPlatform.Android>
+			</OnPlatform>
+		</NavigationPage.Title>
+	</NavigationPage>
+
+	<NavigationPage>
+		<x:Arguments>
+            <local:SchedulePage />
+        </x:Arguments>
+		<NavigationPage.Icon>
+			<OnPlatform x:TypeArguments="FileImageSource">
+				<OnPlatform.iOS>
+				    calendar.png	
+				</OnPlatform.iOS>
+			</OnPlatform>
+		</NavigationPage.Icon>
+		<NavigationPage.Title>
+			<OnPlatform x:TypeArguments="x:String">
+				<OnPlatform.Android>
+					Horários
+				</OnPlatform.Android>
+			</OnPlatform>
+		</NavigationPage.Title>
+	</NavigationPage>
+</TabbedPage>
