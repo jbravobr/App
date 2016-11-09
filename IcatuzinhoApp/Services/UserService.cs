@@ -6,23 +6,20 @@ using System.Linq;
 
 namespace IcatuzinhoApp
 {
-    public class UserService : IUserService
+    public class UserService : BaseService<User>, IUserService
     {
         IHttpAccessService _httpService;
         ILogExceptionService _log;
         IAuthenticationService _auth;
-        IUserRepository _repo;
         DTO<User> _utils;
 
         public UserService(IHttpAccessService httpService,
                            ILogExceptionService log,
-                           IAuthenticationService auth,
-                           IUserRepository repo)
+                           IAuthenticationService auth)
         {
             _httpService = httpService;
             _log = log;
             _auth = auth;
-            _repo = repo;
         }
 
         public async Task<bool> GetAuthenticatedUser()
@@ -31,13 +28,10 @@ namespace IcatuzinhoApp
 
             try
             {
-                var user = Get();
+                var user = GetAllWithChildren().FirstOrDefault();
 
                 if (user != null)
-                {
                     resultDB = await Task.FromResult(true);
-                    RegisterLocalAuthenticatedUser();
-                }
             }
             catch (Exception ex)
             {
@@ -68,8 +62,7 @@ namespace IcatuzinhoApp
                     if (user != null)
                     {
                         var _user = new User { Email = email, Password = Crypto.EncryptStringAES(password), Id = user.Id };
-                        resultDB = Insert(_user);
-                        RegisterLocalAuthenticatedUser();
+                        resultDB = InsertOrReplaceWithChildren(_user);
                     }
 
                     return resultDB;
@@ -89,64 +82,6 @@ namespace IcatuzinhoApp
             }
 
             return resultDB;
-        }
-
-        private void RegisterLocalAuthenticatedUser()
-        {
-            var user = Get();
-
-            if (user != null)
-                App.UserAuthenticated = user;
-        }
-
-        public bool Insert(User entity)
-        {
-            return _repo.Insert(entity);
-        }
-
-        public bool Insert(List<User> entities)
-        {
-            return _repo.Insert(entities);
-        }
-
-        public bool Delete(User entity)
-        {
-            return _repo.Delete(entity);
-        }
-
-        public bool Update(User entity)
-        {
-            return _repo.Update(entity);
-        }
-
-        public bool Any()
-        {
-            return _repo.Any();
-        }
-
-        public List<User> GetAll(Expression<Func<User, bool>> predicate)
-        {
-            return _repo.GetAll(predicate);
-        }
-
-        public List<User> GetAll()
-        {
-            return _repo.GetAll();
-        }
-
-        public User Get(Expression<Func<User, bool>> predicate)
-        {
-            return _repo.Get(predicate);
-        }
-
-        public User Get()
-        {
-            return _repo.Get();
-        }
-
-        public User GetById(int pkId)
-        {
-            return _repo.GetById(pkId);
         }
     }
 }

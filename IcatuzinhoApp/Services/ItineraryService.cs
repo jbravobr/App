@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace IcatuzinhoApp
 {
-    public class ItineraryService : IItineraryService
+    public class ItineraryService : BaseService<Itinerary>, IItineraryService
     {
         IHttpAccessService _httpService;
         ILogExceptionService _log;
         IAuthenticationService _auth;
-        IItineraryRepository _repo;
         DTO<Itinerary> _utils;
 
         public ItineraryService(IHttpAccessService httpService,
                                 ILogExceptionService log,
-                                IAuthenticationService auth,
-                                IItineraryRepository repo)
+                                IAuthenticationService auth)
         {
             _httpService = httpService;
             _log = log;
             _auth = auth;
-            _repo = repo;
         }
 
         public async Task GetAllItineraries()
@@ -40,7 +35,7 @@ namespace IcatuzinhoApp
                     var itineraries = await _utils.ConvertCollectionObjectFromJson(data.Content);
 
                     if (itineraries != null && itineraries.Any())
-                        _repo.Insert(itineraries);
+                        InsertOrReplaceAllWithChildren(itineraries);
                 }
 
                 if (data != null && data.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -55,56 +50,6 @@ namespace IcatuzinhoApp
                 _log.SubmitToInsights(ex);
                 UIFunctions.ShowErrorMessageToUI();
             }
-        }
-
-        public bool Insert(Itinerary entity)
-        {
-            return _repo.Insert(entity);
-        }
-
-        public bool Insert(List<Itinerary> entities)
-        {
-            return _repo.Insert(entities);
-        }
-
-        public bool Delete(Itinerary entity)
-        {
-            return _repo.Delete(entity);
-        }
-
-        public bool Update(Itinerary entity)
-        {
-            return _repo.Update(entity);
-        }
-
-        public bool Any()
-        {
-            return _repo.Any();
-        }
-
-        public List<Itinerary> GetAll(Expression<Func<Itinerary, bool>> predicate)
-        {
-            return _repo.GetAll(predicate);
-        }
-
-        public List<Itinerary> GetAll()
-        {
-            return _repo.GetAll();
-        }
-
-        public Itinerary Get(Expression<Func<Itinerary, bool>> predicate)
-        {
-            return _repo.Get(predicate);
-        }
-
-        public Itinerary Get()
-        {
-            return _repo.Get();
-        }
-
-        public Itinerary GetById(int pkId)
-        {
-            return _repo.GetById(pkId);
         }
     }
 }

@@ -16,8 +16,7 @@
 					HeightRequest="200"
 					HasZoomEnabled="true"
 					IsShowingUser="true"
-					MapType ="Street"
-				/>
+					MapType ="Street" />
     </StackLayout>
 	</ContentPage.Content>
 	

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
@@ -10,8 +12,8 @@ namespace IcatuzinhoApp.UITests
     [TestFixture]
     public class StationTests
     {
-        HttpClient _httpClient;
-        Mock<IStationService> mockService;
+        HttpClient _httpClient = Helpers.ReturnClient();
+        private Mock<IStationService> mockService;
 
         [SetUp]
         public void SetUp()
@@ -23,11 +25,11 @@ namespace IcatuzinhoApp.UITests
         public async Task ReturnListStationsFromAPI()
         {
             var listStation = new List<Station>();
-            var token = await Helpers.GenerateTokenAuthentication();
 
-            _httpClient = Helpers.ReturnClient(token);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var result = await _httpClient.GetAsync(Constants.StationServiceAddress);
+            var result = await _httpClient.GetAsync($"icatuzinhoapi/api/station/");
 
             if (result.IsSuccessStatusCode)
             {
@@ -35,6 +37,7 @@ namespace IcatuzinhoApp.UITests
                 listStation = JsonConvert.DeserializeObject<List<Station>>(stringJson);
             }
 
+            CollectionAssert.AllItemsAreInstancesOfType(listStation, typeof(Station));
             CollectionAssert.IsNotEmpty(listStation);
             CollectionAssert.AllItemsAreNotNull(listStation);
         }
@@ -51,11 +54,11 @@ namespace IcatuzinhoApp.UITests
                 new Station{Id = 5, Latitude = -5, Longitude = 5, Order = 5 }
             };
 
-            mockService.Setup(m => m.Insert(It.IsAny<List<Station>>())).Returns(true);
+            mockService.Setup(m => m.InsertOrReplaceAllWithChildren(It.IsAny<List<Station>>())).Returns(true);
             var service = mockService.Object;
-            var insert = service.Insert(stations);
+            var insert = service.InsertOrReplaceAllWithChildren(stations);
 
-            mockService.Verify(m => m.Insert(It.IsAny<List<Station>>()), Times.Once);
+            mockService.Verify(m => m.InsertOrReplaceAllWithChildren(It.IsAny<List<Station>>()), Times.Once);
 
             Assert.IsTrue(insert);
         }

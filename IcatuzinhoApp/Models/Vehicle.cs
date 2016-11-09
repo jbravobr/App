@@ -1,14 +1,12 @@
-﻿using PropertyChanged;
-using Realms;
+﻿using System;
+using PropertyChanged;
+using SQLiteNetExtensions.Attributes;
 
 namespace IcatuzinhoApp
 {
     [ImplementPropertyChanged]
-    public class Vehicle : RealmObject
+    public class Vehicle : EntityBase
     {
-        [ObjectId]
-        public int Id { get; set; }
-
         public int Number { get; set; }
 
         public int SeatsTotal { get; set; }

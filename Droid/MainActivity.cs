@@ -22,6 +22,8 @@ namespace IcatuzinhoApp.Droid
 
             base.OnCreate(bundle);
 
+            Xamarin.FormsMaps.Init(this, bundle);
+
             Xamarin.Insights.HasPendingCrashReport += (sender, isStartupCrash) =>
                 {
                     if (isStartupCrash)
@@ -33,7 +35,6 @@ namespace IcatuzinhoApp.Droid
             Xamarin.Insights.Initialize("af73d7945c2d65a46435cb2f6441453f416e9b43", this);
 #endif
             UserDialogs.Init(this);
-            Xamarin.FormsMaps.Init(this, bundle);
 
             Xamarin.Forms.Forms.Init(this, bundle);
 
@@ -46,6 +47,19 @@ namespace IcatuzinhoApp.Droid
             */
 
             LoadApplication(new App());
+
+
+#pragma warning disable 618
+            // Hiding ActionBar Icon on Android versions using Material Design
+            //if ((int)Android.OS.Build.VERSION.SdkInt >= 21)
+            //{
+            //ActionBar.SetIcon(
+            //new ColorDrawable(
+            //Resources.GetColor(Android.Resource.Color.Transparent)
+            //)
+            //);
+            //}
+#pragma warning restore 618
         }
     }
 }

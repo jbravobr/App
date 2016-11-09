@@ -43,6 +43,21 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="SQLite.Net">
+      <HintPath>..\packages\SQLite.Net.Core-PCL.3.1.1\lib\portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1\SQLite.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Net.Platform.XamarinAndroid">
+      <HintPath>..\packages\SQLite.Net-PCL.3.1.1\lib\MonoAndroid\SQLite.Net.Platform.XamarinAndroid.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLiteNetExtensions">
+      <HintPath>..\packages\SQLiteNetExtensions.1.3.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\SQLiteNetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="FreshIOC">
+      <HintPath>..\packages\FreshMvvm.2.0.1\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshIOC.dll</HintPath>
+    </Reference>
+    <Reference Include="FreshMvvm">
+      <HintPath>..\packages\FreshMvvm.2.0.1\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshMvvm.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Insights">
       <HintPath>..\packages\Xamarin.Insights.1.12.3\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
     </Reference>
@@ -160,21 +175,13 @@
     <Reference Include="Prism.Unity.Forms">
       <HintPath>..\packages\Prism.Unity.Forms.6.2.0-pre3\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Prism.Unity.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Realm">
-      <HintPath>..\packages\Realm.0.74.1\lib\MonoAndroid44\Realm.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.LocalNotifications.Abstractions">
-      <HintPath>..\packages\Xam.Plugins.Notifier.2.0.2\lib\MonoAndroid10\Plugin.LocalNotifications.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.LocalNotifications">
-      <HintPath>..\packages\Xam.Plugins.Notifier.2.0.2\lib\MonoAndroid10\Plugin.LocalNotifications.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\CustomFontLabelRenderer.cs" />
+    <Compile Include="SQLite_Droid.cs" />
     <Compile Include="Renderers\CustomMapRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,32 +203,285 @@
     <None Include="Assets\avatar.png" />
     <None Include="Resources\ArticleImg.png" />
     <None Include="Resources\values\Colors.tt" />
-    <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\article_image_0.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\article_image_1.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\article_image_2.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\article_image_3.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\article_image_4.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\article_image_5.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_0.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_1.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_10.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_11.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_2.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_3.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_4.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_5.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_6.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_7.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dashboard_thumbnail_8.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\hamburguer_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\logo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_0.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_1.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_2.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_3.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_4.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_5.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_6.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_7.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\product_item_8.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\profile_preview.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\Register_Background.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\RoadBg.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SignUp_Background.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\signup_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_0.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_1.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_3.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_4.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_5.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_7.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_album_8.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_header_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_header_bg_.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\social_header_bg_1.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialGallery_1.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialGallery_2.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialGallery_3.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialGallery_4.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialGallery_5.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialGallery_6.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SocialProfile_Background.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\user_profile_0.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\user_profile_1.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\walkthrough_bg_1.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\walkthrough_bg_2.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\walkthrough_generic_phone_bg.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\welcome_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\article_image_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\article_image_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\article_image_2.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\article_image_3.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\article_image_4.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\article_image_5.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ArticleImg.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_0.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_10.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_11.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_2.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_3.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_4.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_5.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_6.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_7.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_8.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dashboard_thumbnail_9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\grial_logo.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\hamburguer_icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\logo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_2.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_3.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_4.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_5.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_6.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\product_item_7.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ProductNav_Jeans.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ProductNav_Shirt.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ProductNav_Shoes.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ProductNav_Watches.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\profile_preview.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ProfilePreview.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Register_Background.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\RoadBg.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SignUp_Background.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\signup_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_3.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_4.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_5.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_7.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_album_8.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_header_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_header_bg_.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_header_bg_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\social_header_bg_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialGallery_1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialGallery_2.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialGallery_3.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialGallery_4.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialGallery_5.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialGallery_6.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\SocialProfile_Background.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\tie_tanktop.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\user_profile_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\user_profile_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDiversProduct_5.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDiversProduct_6.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDiversProduct_7.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDIversProduct_8.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDivesProduct_1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDivesProduct_2.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDivesProduct_3.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\UXDivesProduct_4.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\walkthrough_bg_1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\walkthrough_bg_2.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\walkthrough_generic_phone_bg.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\welcome_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\article_image_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\article_image_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\article_image_2.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\article_image_3.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\article_image_4.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\article_image_5.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ArticleImg.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_0.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_1.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_10.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_11.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_2.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_3.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_4.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_5.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_6.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_7.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_8.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dashboard_thumbnail_9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\hamburguer_icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\logo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_3.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_4.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_5.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_6.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\product_item_7.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ProductNav_Jeans.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ProductNav_Shirt.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ProductNav_Shoes.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ProductNav_Watches.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\profile_preview.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ProfilePreview.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Register_Background.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\RoadBg.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SignUp_Background.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\signup_bg.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_2.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_3.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_4.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_5.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_7.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_8.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_album_9.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_header_bg_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\social_header_bg_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialGallery_1.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialGallery_2.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialGallery_3.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialGallery_4.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialGallery_5.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialGallery_6.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\SocialProfile_Background.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\user_profile_0.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\user_profile_1.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDiversProduct_5.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDiversProduct_6.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDiversProduct_7.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDIversProduct_8.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDivesProduct_1.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDivesProduct_2.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDivesProduct_3.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\UXDivesProduct_4.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\walkthrough_bg_1.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\walkthrough_bg_2.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\walkthrough_generic_phone_bg.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\welcome_bg.jpg" />
     <AndroidResource Include="Resources\values-v19\bools.xml" />
     <AndroidResource Include="Resources\values-v21\Styles.xml" />
+    <AndroidResource Include="Resources\drawable\article_image_0.jpg" />
+    <AndroidResource Include="Resources\drawable\article_image_1.jpg" />
+    <AndroidResource Include="Resources\drawable\article_image_2.jpg" />
+    <AndroidResource Include="Resources\drawable\article_image_3.jpg" />
+    <AndroidResource Include="Resources\drawable\article_image_4.jpg" />
+    <AndroidResource Include="Resources\drawable\article_image_5.jpg" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_0.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_1.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_2.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_3.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_4.jpg" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_5.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_6.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_7.png" />
+    <AndroidResource Include="Resources\drawable\dashboard_thumbnail_8.png" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_27.jpg" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_31.jpg" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_34.jpg" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_55.jpg" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_71.jpg" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_75.jpg" />
+    <AndroidResource Include="Resources\drawable\friend_thumbnail_93.jpg" />
+    <AndroidResource Include="Resources\drawable\hamburguer_icon.png" />
+    <AndroidResource Include="Resources\drawable\icon.png" />
     <AndroidResource Include="Resources\drawable\logo.png" />
+    <AndroidResource Include="Resources\drawable\product_item_0.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_1.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_2.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_3.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_4.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_5.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_6.jpg" />
+    <AndroidResource Include="Resources\drawable\product_item_7.jpg" />
+    <AndroidResource Include="Resources\drawable\profile_preview.jpg" />
+    <AndroidResource Include="Resources\drawable\Resources.Drawable.Splash.xml" />
+    <AndroidResource Include="Resources\drawable\signup_bg.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_1.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_2.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_3.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_4.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_5.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_6.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_7.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_8.jpg" />
+    <AndroidResource Include="Resources\drawable\social_album_9.jpg" />
+    <AndroidResource Include="Resources\drawable\social_header_bg_0.jpg" />
+    <AndroidResource Include="Resources\drawable\social_header_bg_1.jpg" />
+    <AndroidResource Include="Resources\drawable\splash.png" />
+    <AndroidResource Include="Resources\drawable\thumb_1.jpg" />
+    <AndroidResource Include="Resources\drawable\user_profile_0.jpg" />
+    <AndroidResource Include="Resources\drawable\user_profile_1.jpg" />
+    <AndroidResource Include="Resources\drawable\walkthrough_bg_0.png" />
+    <AndroidResource Include="Resources\drawable\walkthrough_bg_1.png" />
+    <AndroidResource Include="Resources\drawable\walkthrough_bg_2.png" />
+    <AndroidResource Include="Resources\drawable\walkthrough_generic_phone_bg.png" />
+    <AndroidResource Include="Resources\drawable\welcome_bg.jpg" />
     <AndroidResource Include="Resources\values\Styles.xml" />
     <AndroidResource Include="Resources\values\Colors.xml" />
     <AndroidResource Include="Resources\layout\tabs.axml" />
     <AndroidResource Include="Resources\layout\toolbar.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable\busstop.png" />
     <AndroidResource Include="Resources\drawable\offline.png" />
     <AndroidResource Include="Resources\drawable\online.png" />
-    <AndroidResource Include="Resources\drawable\social_header_bg_0.png" />
-    <AndroidResource Include="Resources\drawable\social_header_bg_1.png" />
-    <AndroidResource Include="Resources\drawable\signup_bg.png" />
-    <AndroidResource Include="Resources\drawable\more.png" />
-    <AndroidResource Include="Resources\drawable\exit.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Resources\layout\" />
-    <Folder Include="Resources\drawable-hdpi\" />
-    <Folder Include="Resources\drawable-xhdpi\" />
-    <Folder Include="Resources\drawable-xxhdpi\" />
+    <Folder Include="Renderes\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IcatuzinhoApp\IcatuzinhoApp.csproj">
@@ -236,6 +496,4 @@
   <Import Project="..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.12.3\build\MonoAndroid10\Xamarin.Insights.targets')" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
   <Import Project="..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
-  <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
-  <Import Project="..\packages\Realm.0.74.1\build\Realm.targets" Condition="Exists('..\packages\Realm.0.74.1\build\Realm.targets')" />
 </Project>

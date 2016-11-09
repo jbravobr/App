@@ -1,15 +1,12 @@
-﻿using PropertyChanged;
-using Realms;
+﻿using System;
+using PropertyChanged;
+using SQLiteNetExtensions.Attributes;
 
 namespace IcatuzinhoApp
 {
     [ImplementPropertyChanged]
-    public class Driver : RealmObject
+    public class Driver : EntityBase
     {
-        [ObjectId]
-        public int Id { get; set; }
-
-        [Indexed]
         public string Name { get; set; }
     }
 }

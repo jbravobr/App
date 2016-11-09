@@ -1,15 +1,11 @@
 ﻿using System;
 using PropertyChanged;
-using Realms;
 
 namespace IcatuzinhoApp
 {
     [ImplementPropertyChanged]
-    public class Station : RealmObject
+    public class Station : EntityBase
     {
-        [ObjectId]
-        public int Id { get; set; }
-
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }

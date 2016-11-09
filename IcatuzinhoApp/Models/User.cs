@@ -1,18 +1,18 @@
-﻿using PropertyChanged;
-using Realms;
+﻿using System;
+using System.ComponentModel;
+using PropertyChanged;
+using SQLite.Net.Attributes;
 
 namespace IcatuzinhoApp
 {
     [ImplementPropertyChanged]
-    public class User : RealmObject
+    public class User : EntityBase
     {
-        [ObjectId]
-        public int Id { get; set; }
-
         public string Email { get; set; }
 
         public string Name { get; set; }
 
+        [NotNull]
         public string Password { get; set; }
     }
 }

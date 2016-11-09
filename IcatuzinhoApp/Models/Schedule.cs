@@ -1,23 +1,26 @@
 ﻿using System;
 using Newtonsoft.Json;
 using PropertyChanged;
-using Realms;
+using SQLite.Net.Attributes;
 
 namespace IcatuzinhoApp
 {
     [ImplementPropertyChanged]
-    public class Schedule : RealmObject
+    public class Schedule : EntityBase
     {
-        [ObjectId]
-        public int Id { get; set; }
+        public string StartSchedule { get; set; }
 
-        public DateTimeOffset StartSchedule { get; set; }
+        [JsonIgnore]
+        [Ignore]
+        public DateTime TimeSchedule { get; set; }
 
         public string Message { get; set; }
 
+        [Ignore]
         [JsonIgnore]
         public string StatusAvatar { get; set; }
 
+        [Ignore]
         [JsonIgnore]
         public string StatusDescription { get; set; }
     }

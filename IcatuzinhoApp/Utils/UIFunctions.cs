@@ -71,22 +71,6 @@ namespace IcatuzinhoApp
             _userDialogs.Toast(SetToastUIConfiguration(EnumToastEventType.Warning, message, timeout));
         }
 
-        public static void ShowNotificationForNextTravel(string time)
-        {
-            Plugin.LocalNotifications
-                  .CrossLocalNotifications
-                  .Current
-                  .Show("Icatuzinho", $"Atenção à próxima saída que acontecerá às {time}", 1);
-        }
-
-        public static void RemoveNotificationForNextTravel()
-        {
-            Plugin.LocalNotifications
-                  .CrossLocalNotifications
-                  .Current
-                  .Cancel(1);
-        }
-
         static ToastConfig SetToastUIConfiguration(EnumToastEventType typeEvent, string message, int duration)
         {
             ToastConfig t = null;

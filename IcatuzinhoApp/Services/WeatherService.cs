@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace IcatuzinhoApp
 {
-    public class WeatherService : IWeatherService
+    public class WeatherService : BaseService<Weather>, IWeatherService
     {
         IHttpAccessService _httpService;
         ILogExceptionService _log;
         IAuthenticationService _auth;
-        IWeatherRepository _repo;
         DTO<Weather> _utils;
 
         public WeatherService(IHttpAccessService httpService,
                               ILogExceptionService log,
-                              IAuthenticationService auth,
-                              IWeatherRepository repo)
+                              IAuthenticationService auth)
         {
             _httpService = httpService;
             _log = log;
             _auth = auth;
-            _repo = repo;
         }
 
         public async Task GetWeather()
@@ -39,7 +34,7 @@ namespace IcatuzinhoApp
                     var weather = await _utils.ConvertSingleObjectFromJson(data.Content);
 
                     if (weather != null)
-                        Insert(weather);
+                        InsertOrReplaceWithChildren(weather);
                 }
 
                 if (data != null && data.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -53,56 +48,6 @@ namespace IcatuzinhoApp
                 _log.SubmitToInsights(ex);
                 UIFunctions.ShowErrorMessageToUI();
             }
-        }
-
-        public bool Insert(Weather entity)
-        {
-            return _repo.Insert(entity);
-        }
-
-        public bool Insert(List<Weather> entities)
-        {
-            return _repo.Insert(entities);
-        }
-
-        public bool Delete(Weather entity)
-        {
-            return _repo.Delete(entity);
-        }
-
-        public bool Update(Weather entity)
-        {
-            return _repo.Update(entity);
-        }
-
-        public bool Any()
-        {
-            return _repo.Any();
-        }
-
-        public List<Weather> GetAll(Expression<Func<Weather, bool>> predicate)
-        {
-            return _repo.GetAll(predicate);
-        }
-
-        public List<Weather> GetAll()
-        {
-            return _repo.GetAll();
-        }
-
-        public Weather Get(Expression<Func<Weather, bool>> predicate)
-        {
-            return _repo.Get(predicate);
-        }
-
-        public Weather Get()
-        {
-            return _repo.Get();
-        }
-
-        public Weather GetById(int pkId)
-        {
-            return _repo.GetById(pkId);
         }
     }
 }

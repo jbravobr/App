@@ -1,16 +1,12 @@
-﻿using PropertyChanged;
-using Realms;
+﻿using System;
+
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
-    public class DeveloperSettings : RealmObject
+    public class DeveloperSettings : EntityBase
     {
-        [ObjectId]
-        public int Id { get; set; }
-
         public bool IsEmulatorDebugEnabledForConnectivity { get; private set; }
 
-        public bool ConnectivityStatus { get; private set; }
+        public bool ConnectivityStatus { get; private set;}
 
         public bool IsTestCloudEnabled { get; private set; }
 

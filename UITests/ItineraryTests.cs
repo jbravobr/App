@@ -12,7 +12,7 @@ namespace IcatuzinhoApp.UITests
     [TestFixture]
     public class ItineraryTests
     {
-        HttpClient _httpClient;
+        HttpClient _httpClient = Helpers.ReturnClient();
         private Mock<IItineraryService> mock;
 
         [SetUp]
@@ -25,11 +25,11 @@ namespace IcatuzinhoApp.UITests
         public async Task GetItinerariesFromAPI()
         {
             var listItineraries = new List<Itinerary>();
-            var token = await Helpers.GenerateTokenAuthentication();
 
-            _httpClient = Helpers.ReturnClient(token);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var result = await _httpClient.GetAsync(Constants.ItineraryServiceAddress);
+            var result = await _httpClient.GetAsync($"icatuzinhoapi/api/itinerary/");
 
             if (result.IsSuccessStatusCode)
             {
@@ -37,6 +37,7 @@ namespace IcatuzinhoApp.UITests
                 listItineraries = JsonConvert.DeserializeObject<List<Itinerary>>(stringJson);
             }
 
+            CollectionAssert.AllItemsAreInstancesOfType(listItineraries, typeof(Itinerary));
             CollectionAssert.IsNotEmpty(listItineraries);
             CollectionAssert.AllItemsAreNotNull(listItineraries);
         }
@@ -53,11 +54,11 @@ namespace IcatuzinhoApp.UITests
                 new Itinerary{Id = 5, Latitude = -5, Longitude = 5, Order = 5 }
             };
 
-            mock.Setup(m => m.Insert(It.IsAny<List<Itinerary>>())).Returns(true);
+            mock.Setup(m => m.InsertOrReplaceAllWithChildren(It.IsAny<List<Itinerary>>())).Returns(true);
             var service = mock.Object;
-            var insert = service.Insert(itineraries);
+            var insert = service.InsertOrReplaceAllWithChildren(itineraries);
 
-            mock.Verify(m => m.Insert(It.IsAny<List<Itinerary>>()), Times.Once);
+            mock.Verify(m => m.InsertOrReplaceAllWithChildren(It.IsAny<List<Itinerary>>()), Times.Once);
 
             Assert.IsTrue(insert);
         }

@@ -11,7 +11,7 @@ namespace IcatuzinhoApp
 
         public static void SendTrackToInsights(Transaction transaction)
         {
-            Insights.Track(transaction.Name, transaction.DetailKey, transaction.DetailName);
+            Insights.Track(transaction.Name, transaction.Details);
         }
 
         public static void TrackLoginInformation()

@@ -2,27 +2,23 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace IcatuzinhoApp
 {
-    public class StationService : IStationService
+    public class StationService : BaseService<Station>, IStationService
     {
         IHttpAccessService _httpService;
         ILogExceptionService _log;
         IAuthenticationService _auth;
-        IStationRepository _repo;
         DTO<List<Station>> _utils;
 
         public StationService(IHttpAccessService httpService,
                               ILogExceptionService log,
-                              IAuthenticationService auth,
-                              IStationRepository repo)
+                              IAuthenticationService auth)
         {
             _httpService = httpService;
             _log = log;
             _auth = auth;
-            _repo = repo;
         }
 
         public async Task GetAllStations()
@@ -40,7 +36,7 @@ namespace IcatuzinhoApp
                     var stations = await _utils.ConvertSingleObjectFromJson(data.Content);
 
                     if (stations != null && stations.Any())
-                        Insert(stations);
+                        InsertOrReplaceAllWithChildren(stations);
                 }
 
                 if (data != null && data.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -55,56 +51,6 @@ namespace IcatuzinhoApp
                 _log.SubmitToInsights(ex);
                 UIFunctions.ShowErrorMessageToUI();
             }
-        }
-
-        public bool Insert(Station entity)
-        {
-            return _repo.Insert(entity);
-        }
-
-        public bool Insert(List<Station> entities)
-        {
-            return _repo.Insert(entities);
-        }
-
-        public bool Delete(Station entity)
-        {
-            return _repo.Delete(entity);
-        }
-
-        public bool Update(Station entity)
-        {
-            return _repo.Update(entity);
-        }
-
-        public bool Any()
-        {
-            return _repo.Any();
-        }
-
-        public List<Station> GetAll(Expression<Func<Station, bool>> predicate)
-        {
-            return _repo.GetAll(predicate);
-        }
-
-        public List<Station> GetAll()
-        {
-            return _repo.GetAll();
-        }
-
-        public Station Get(Expression<Func<Station, bool>> predicate)
-        {
-            return _repo.Get(predicate);
-        }
-
-        public Station Get()
-        {
-            return _repo.Get();
-        }
-
-        public Station GetById(int pkId)
-        {
-            return _repo.GetById(pkId);
         }
     }
 }

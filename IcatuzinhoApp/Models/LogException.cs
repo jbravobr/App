@@ -1,22 +1,27 @@
 ﻿using System;
-using PropertyChanged;
-using Realms;
+using SQLite.Net.Attributes;
+using SQLiteNetExtensions.Attributes;
 
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
-    public class LogException : RealmObject
+    public class LogException
     {
-        [ObjectId]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public DateTimeOffset DtCreation { get; set; }
+        public DateTime DtCreation { get; set; }
 
         public string Exception { get; set; }
 
         public string InnerException { get; set; }
 
+        public LogExceptionType Type { get; set; }
+
+        [OneToOne]
         public Transaction Trasaction { get; set; }
+
+        [ForeignKey(typeof(Transaction))]
+        public int TrasactionId { get; set; }
     }
 }
 

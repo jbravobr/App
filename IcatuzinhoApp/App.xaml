@@ -29,8 +29,6 @@
 			<Color x:Key="AccentColor">Black</Color>
 			<!-- Export InverseTextColor -->
 			<Color x:Key="InverseTextColor">White</Color>
-			<!-- Cor do botão do login -->
-			<Color x:Key="BotaoLogin">Black</Color>
 			<!-- STATIC IMAGES -->
 			<FileImageSource x:Key="HamburguerIcon">hamburguer_icon.png</FileImageSource>
 			<FileImageSource x:Key="WelcomeBackgroundImage">welcome_bg.jpg</FileImageSource>

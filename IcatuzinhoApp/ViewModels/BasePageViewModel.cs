@@ -20,16 +20,9 @@ namespace IcatuzinhoApp
             }
         }
 
-        public void SendToInsights(Exception ex)
-        {
+        public void SendToInsights(Exception ex) => _logExceptionService.SubmitToInsights(ex);
 
-#if DEBUG
-            throw ex;
-#else
-            _logExceptionService.SubmitToInsights(ex);
-#endif
-
-        }
+        public void RecordMetric(Transaction transaction, LogExceptionType type, Exception ex) => _logExceptionService.Save(transaction, type, ex?.Message, ex.InnerException?.InnerException.Message);
     }
 }
 

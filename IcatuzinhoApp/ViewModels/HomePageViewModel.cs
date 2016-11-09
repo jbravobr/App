@@ -4,10 +4,6 @@ using Acr.UserDialogs;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
-using System.Linq;
-using Prism.Navigation;
-using Prism.Commands;
-
 
 namespace IcatuzinhoApp
 {
@@ -36,11 +32,7 @@ namespace IcatuzinhoApp
 
         const string Minutes = "00";
 
-        private DateTime[] arrivalTimes { get; set; }
-
         Travel _travel { get; set; }
-
-        public DelegateCommand NavigateCommand { get; set; }
 
         public string TempIco { get; set; }
 
@@ -48,28 +40,20 @@ namespace IcatuzinhoApp
 
         readonly IWeatherService _weatherService;
 
-        readonly INavigationService _navigationService;
-
         IUserDialogs _userDialogs { get; set; }
 
         public HomePageViewModel(ITravelService travelService,
-                                 IWeatherService weatherService,
-                                 INavigationService navigationService)
+                             IWeatherService weatherService)
         {
             _travelService = travelService;
             _weatherService = weatherService;
-            _navigationService = navigationService;
-
             _userDialogs = App._container.Resolve<IUserDialogs>();
 
             isCheckIn = true;
             isCheckOut = false;
 
             GetInfos();
-            ScheduleGetInfoForUI();
-            ScheduleLocalNotificationForTravel();
 
-            NavigateCommand = new DelegateCommand(Logout);
         }
 
         public void GetInfos()
@@ -93,18 +77,18 @@ namespace IcatuzinhoApp
                     CurrentDate = $"{currentDay}/{currentMonth}";
 
                     if (string.IsNullOrEmpty(SeatsAvailable))
-                        SeatsAvailable = (_travel.Vehicle.SeatsTotal - _travel.Vehicle.SeatsAvailable).ToString();
+                        SeatsAvailable = _travel.Vehicle.SeatsAvailable.ToString();
 
                     SeatsTotal = _travel.Vehicle.SeatsTotal.ToString();
                     Description = _travel.Schedule.Message;
 
-                    var _hours = _travel.Schedule.StartSchedule.ToLocalTime().Hour == 0 ?
-                                  ZeroHours :
-                                        _travel.Schedule.StartSchedule.ToLocalTime().Hour.ToString();
+                    var _hours = Convert.ToDateTime(_travel.Schedule.StartSchedule).Hour == 0 ?
+                                        ZeroHours :
+                                        Convert.ToDateTime(_travel.Schedule.StartSchedule).Hour.ToString();
 
-                    var _minutes = _travel.Schedule.StartSchedule.ToLocalTime().Minute == 0 ?
-                                    Minutes :
-                                          _travel.Schedule.StartSchedule.ToLocalTime().Minute.ToString();
+                    var _minutes = Convert.ToDateTime(_travel.Schedule.StartSchedule).Minute == 0 ?
+                                          Minutes :
+                                          Convert.ToDateTime(_travel.Schedule.StartSchedule).Minute.ToString();
 
                     Time = $"{_hours}:{_minutes}";
 
@@ -129,28 +113,9 @@ namespace IcatuzinhoApp
             }
         }
 
-        public void ScheduleLocalNotificationForTravel()
-        {
-            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        var nextTravelTime = GetNextTravelTime();
-
-                        if (nextTravelTime != null)
-                            UIFunctions.ShowNotificationForNextTravel($"{nextTravelTime.Value.Hours}:{nextTravelTime.Value.Minutes}");
-                    });
-                });
-
-                return false;
-            });
-        }
-
         public void ScheduleGetInfoForUI()
         {
-            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
             {
                 Task.Factory.StartNew(() =>
                 {
@@ -166,67 +131,11 @@ namespace IcatuzinhoApp
             });
         }
 
-        public Command ShowMenuMoreIOS
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    var cfg = new ActionSheetConfig();
-
-                    cfg.Add("Sair", async () =>
-                    {
-                        await NavigateCommand.Execute();
-                    });
-                    cfg.SetCancel("Cancelar");
-
-                    _userDialogs.ActionSheet(cfg);
-                });
-            }
-        }
-
-        public TimeSpan? GetNextTravelTime()
-        {
-            var result = _travelService.GetAll()
-                                       .FirstOrDefault(t => DateTime.Now.Add(TimeSpan.FromMinutes(5)).TimeOfDay <= t.Schedule.StartSchedule.ToLocalTime().TimeOfDay);
-
-            if (result != null)
-                return result.Schedule.StartSchedule.ToLocalTime().TimeOfDay;
-
-            return null;
-        }
-
-        public Command ShowMenuMoreAndroid
-        {
-            get
-            {
-                return new Command(() =>
-                {
-                    var cfg = new ActionSheetConfig()
-                            .SetTitle("Deseja sair?");
-
-                    cfg.Add("Sim", async () =>
-                    {
-                        await NavigateCommand.Execute();
-                    });
-                    cfg.SetCancel("Não");
-
-                    _userDialogs.ActionSheet(cfg);
-                });
-            }
-        }
-
-        public async void Logout()
-        {
-            App.UserAuthenticated = null;
-            await _navigationService.Navigate("LoginPage", null, true, true);
-        }
-
         public Command CheckIn
         {
             get
             {
-                return new Command(async () =>
+                return new Command(async (obj) =>
                 {
                     try
                     {
@@ -248,16 +157,21 @@ namespace IcatuzinhoApp
 
                             _userDialogs.HideLoading();
                             Tracks.TrackCheckInInformation();
+                            UIFunctions.ShowToastSuccessMessageToUI("Checkin efetuado!",
+                                                                   Device.OS == TargetPlatform.iOS ?
+                                                                   6000 : 3000);
                         }
                         else
                         {
                             _userDialogs.HideLoading();
-                            UIFunctions.ShowErrorMessageToUI("Erro ao fazer o Checkin, tente novamente");
+                            UIFunctions.ShowToastErrorMessageToUI("Erro ao fazer o Checkin, tente novamente",
+                                                                   Device.OS == TargetPlatform.iOS ?
+                                                                   6000 : 3000);
                         }
                     }
                     catch (Exception ex)
                     {
-                        //_userDialogs.HideLoading();
+                        _userDialogs.HideLoading();
 
                         base.SendToInsights(ex);
                         UIFunctions.ShowErrorMessageToUI();
@@ -297,11 +211,16 @@ namespace IcatuzinhoApp
 
                                 _userDialogs.HideLoading();
                                 Tracks.TrackCheckOutInformation();
+                                UIFunctions.ShowToastSuccessMessageToUI("Checkout efetuado!",
+                                                                   Device.OS == TargetPlatform.iOS ?
+                                                                   6000 : 3000);
                             }
                             else
                             {
                                 _userDialogs.HideLoading();
-                                UIFunctions.ShowErrorMessageToUI("Erro ao fazer o Checkout, tente novamente");
+                                UIFunctions.ShowToastErrorMessageToUI("Erro ao fazer o Checkout, tente novamente",
+                                                                   Device.OS == TargetPlatform.iOS ?
+                                                                   6000 : 3000);
                             }
                         }
                     }
@@ -318,39 +237,22 @@ namespace IcatuzinhoApp
 
         public async Task UpdateSeats()
         {
-            try
-            {
-                var result = await _travelService.GetAvailableSeats(_travel.Id);
+            var result = await _travelService.GetAvailableSeats(_travel.Id);
 
-                if (result > 0)
-                    SeatsAvailable = (Convert.ToInt32(SeatsTotal) - result).ToString();
-
-                if (SeatsAvailable == SeatsTotal)
-                {
-                    isCheckIn = false;
-                    isCheckOut = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                SendToInsights(ex);
-                UIFunctions.ShowErrorMessageToUI("Ops, houve um erro ao atualizar a disponibilidade de acentos");
-            }
+            if (result > 0)
+                SeatsAvailable = result.ToString();
         }
 
         public Travel GetNextTravel()
         {
-            var travels = _travelService.GetAll();
-            Travel travel;
-
-            travel = travels.Where(c => TimeSpan.Compare(DateTime.Now.ToLocalTime().TimeOfDay, c.Schedule.StartSchedule.ToLocalTime().TimeOfDay) <= 0)
-                            .OrderBy(c => c.Schedule.StartSchedule.ToLocalTime())
-                            .FirstOrDefault();
+            //Expression<Func<Travel, bool>> bySchedule = (x) => x.Schedule.StartSchedule <= DateTime.Now;
+            //var travel = await _travelService.GetWithChildrenAsync(bySchedule);
+            var travel = _travelService.GetWithChildrenById(1);
 
             if (travel != null)
                 return travel;
 
-            return travel ?? travels.First();
+            return null;
         }
 
         public Weather GetWeather()

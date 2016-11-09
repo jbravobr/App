@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using Acr.UserDialogs;
 using Xamarin;
+using Microsoft.Practices.Unity;
+using Prism.Unity;
 using Prism.Navigation;
 using Prism.Commands;
 
@@ -66,7 +68,7 @@ namespace IcatuzinhoApp
 
             NavigateCommand = new DelegateCommand(Navigate);
 
-            //Logon().ConfigureAwait(true);
+            Logon().ConfigureAwait(false);
         }
 
         public async Task Logon()
@@ -87,32 +89,26 @@ namespace IcatuzinhoApp
                 }
                 else if (await GetAuthenticatedUser())
                 {
-                    var isRefreshToken = await _authService.RefreshToken();
+                    if (Device.OS == TargetPlatform.Android)
+                        _userDialogs.HideLoading(); // Escondendo o loading da verificação de Rede.
 
-                    if (isRefreshToken)
-                    {
-                        if (Device.OS == TargetPlatform.Android)
-                            _userDialogs.HideLoading(); // Escondendo o loading da verificação de Rede.
+                    RegisterLocalAuthenticatedUser();
 
-                        if (Device.OS == TargetPlatform.Android)
-                            _userDialogs.ShowLoading("Carregando");
+                    if (Device.OS == TargetPlatform.Android)
+                        _userDialogs.ShowLoading("Carregando");
 
-                        await _weatherService.GetWeather();
+                    await _weatherService.GetWeather();
 
-                        Insights.Identify(App.UserAuthenticated.Email,
-                                             Insights.Traits.GuestIdentifier,
-                                             App.UserAuthenticated.Email);
+                    Insights.Identify(App.UserAuthenticated.Email,
+                                         Insights.Traits.GuestIdentifier,
+                                         App.UserAuthenticated.Email);
 
-                        Tracks.TrackLoginInformation();
+                    Tracks.TrackLoginInformation();
 
-                        await NavigateCommand.Execute();
-                    }
-                    else
-                    {
-                        if (Device.OS == TargetPlatform.Android)
-                            _userDialogs.HideLoading(); // Escondendo o loading da verificação de Rede.
-                        UIFunctions.ShowErrorMessageToUI("Sua sessão não pode ser renovada, efetue logoff e logue novamente");
-                    }
+                    if (Device.OS == TargetPlatform.Android)
+                        _userDialogs.HideLoading();
+
+                    await NavigateCommand.Execute();
                 }
                 else
                 {
@@ -145,15 +141,29 @@ namespace IcatuzinhoApp
                        // Com token
                        var userAuthenticated = await _authService.AuthenticationWithFormUrlEncoded(Email, Password, false);
 
+                       // Sem token
+                       //Gravando user
+                       //var userAuthenticated = await _userService.Login(Email, Password);
+
                        if (userAuthenticated)
                        {
+                           //Gravando user
                            await _userService.Login(Email, Password);
+
+                           RegisterLocalAuthenticatedUser();
+
                            await _stationService.GetAllStations();
                            await _scheduleService.GetAllSchedules();
+
                            await InsertTravels();
+
                            await _weatherService.GetWeather();
                            await _itineraryService.GetAllItineraries();
-                           await _navigationService.Navigate("SelectionPage", null, true);
+
+                           RegisterLocalAuthenticatedUser();
+
+                           _userDialogs.HideLoading();
+                           await NavigateCommand.Execute();
                        }
                        else
                        {
@@ -174,9 +184,17 @@ namespace IcatuzinhoApp
             }
         }
 
+        public void RegisterLocalAuthenticatedUser()
+        {
+            var user = _userService.GetAll();
+
+            if (user != null && user.Any())
+                App.UserAuthenticated = user.FirstOrDefault();
+        }
+
         public async Task InsertTravels()
         {
-            var schedules = _scheduleService.GetAll();
+            var schedules = _scheduleService.GetAllWithChildren();
 
             if (schedules != null && schedules.Any())
             {
@@ -192,9 +210,7 @@ namespace IcatuzinhoApp
         {
             try
             {
-                _userDialogs.ShowLoading("Abrindo...");
-
-                await _navigationService.Navigate("SelectionPage", null, true);
+                await _navigationService.Navigate("SelectionPage");
             }
             catch (Exception ex)
             {

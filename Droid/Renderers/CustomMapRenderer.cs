@@ -46,11 +46,7 @@ namespace IcatuzinhoApp.Droid
                 polylineOptions.Add(new LatLng(position.Latitude, position.Longitude));
             }
 
-            var options = new GoogleMapOptions();
-            options.InvokeLiteMode(true);
-
             map.AddPolyline(polylineOptions);
-            map.TrafficEnabled = true;
         }
     }
 }

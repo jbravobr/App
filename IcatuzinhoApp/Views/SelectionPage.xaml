@@ -6,7 +6,6 @@
 		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
         prism:ViewModelLocator.AutowireViewModel="True"
 		xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp">
-	
 	<NavigationPage>
 		<x:Arguments>
     		<local:HomePage />
@@ -17,16 +16,8 @@
 					house-full.png
 				</OnPlatform.iOS>
 			</OnPlatform>
-		</NavigationPage.Icon>    
-		<NavigationPage.Title>
-			<OnPlatform x:TypeArguments="x:String">
-				<OnPlatform.Android>
-					Home
-				</OnPlatform.Android>
-			</OnPlatform>
-		</NavigationPage.Title>
+		</NavigationPage.Icon>      
 	</NavigationPage>
-
 	<NavigationPage>
 		<x:Arguments>
 			<local:TravelPage />
@@ -37,16 +28,8 @@
 					bus-full.png
 				</OnPlatform.iOS>
 			</OnPlatform>
-		</NavigationPage.Icon>    
-		<NavigationPage.Title>
-			<OnPlatform x:TypeArguments="x:String">
-				<OnPlatform.Android>
-					Itinerário
-				</OnPlatform.Android>
-			</OnPlatform>
-		</NavigationPage.Title>
+		</NavigationPage.Icon>      
 	</NavigationPage>
-
 	<NavigationPage>
 		<x:Arguments>
             <local:SchedulePage />
@@ -58,12 +41,5 @@
 				</OnPlatform.iOS>
 			</OnPlatform>
 		</NavigationPage.Icon>
-		<NavigationPage.Title>
-			<OnPlatform x:TypeArguments="x:String">
-				<OnPlatform.Android>
-					Horários
-				</OnPlatform.Android>
-			</OnPlatform>
-		</NavigationPage.Title>
 	</NavigationPage>
 </TabbedPage>

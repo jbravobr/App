@@ -12,8 +12,8 @@ namespace IcatuzinhoApp.UITests
     [TestFixture]
     public class ScheduleTests
     {
-        HttpClient _httpClient;
-        Mock<IScheduleService> mock;
+        HttpClient _httpClient = Helpers.ReturnClient();
+        private Mock<IScheduleService> mock;
 
         [SetUp]
         public void SetUp()
@@ -25,11 +25,11 @@ namespace IcatuzinhoApp.UITests
         public async Task ReturnListSchedulesFromAPI()
         {
             var listSchedule = new List<Schedule>();
-            var token = await Helpers.GenerateTokenAuthentication();
 
-            _httpClient = Helpers.ReturnClient(token);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var result = await _httpClient.GetAsync(Constants.ScheduleServiceAddress);
+            var result = await _httpClient.GetAsync($"icatuzinhoapi/api/schedule");
 
             if (result.IsSuccessStatusCode)
             {
@@ -37,6 +37,7 @@ namespace IcatuzinhoApp.UITests
                 listSchedule = JsonConvert.DeserializeObject<List<Schedule>>(stringJson);
             }
 
+            CollectionAssert.AllItemsAreInstancesOfType(listSchedule, typeof(Schedule));
             CollectionAssert.IsNotEmpty(listSchedule);
             CollectionAssert.AllItemsAreNotNull(listSchedule);
         }
@@ -53,11 +54,11 @@ namespace IcatuzinhoApp.UITests
                 new Schedule{StartSchedule = DateTime.Now.AddHours(4),Id = 5, Message = "Teste 5"}
             };
 
-            mock.Setup(m => m.Insert(It.IsAny<List<Schedule>>())).Returns(true);
+            mock.Setup(m => m.GetAll()).Returns(schedules);
             var scheduleService = mock.Object;
-            var col = scheduleService.Insert(schedules);
+            var col = scheduleService.GetAll();
 
-            Assert.IsTrue(col);
+            Assert.GreaterOrEqual(col.Count, 0);
         }
     }
 }

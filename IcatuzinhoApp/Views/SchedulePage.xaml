@@ -14,14 +14,11 @@
 
             <StackLayout Padding="0">
 				<ListView 
-                    ItemsSource="{Binding Travels}"
+                    ItemsSource="{Binding Schedules}"
                     RowHeight="66"
 				    CachingStrategy="RecycleElement"
 					x:Name="listViewSchedules"
-					SeparatorColor="Black"
-					IsPullToRefreshEnabled="true"
-					RefreshCommand="{Binding Refresh}"
-					IsRefreshing="{Binding IsRefreshing}">
+					SeparatorColor="Black">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>

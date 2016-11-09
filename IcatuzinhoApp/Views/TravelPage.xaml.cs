@@ -6,13 +6,14 @@ using Xamarin.Forms.Maps;
 using System.Linq;
 using Acr.UserDialogs;
 using Microsoft.Practices.Unity;
-using Xamarin.Forms.Xaml;
 
 namespace IcatuzinhoApp
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TravelPage : ContentPage
     {
+        double _latitudeInicial = -22.9101457;
+        double _longitudeInicial = -43.1707052;
+
         List<Station> _stations;
         ILogExceptionService _logExceptionService;
 
@@ -105,6 +106,19 @@ namespace IcatuzinhoApp
         public TravelPage()
         {
             InitializeComponent();
+
+            if (_logExceptionService == null)
+                _logExceptionService = App._container.Resolve<ILogExceptionService>();
+
+            try
+            {
+                MapaTravel.MoveToRegion(MapSpan.FromCenterAndRadius(
+                    new Position(_latitudeInicial, _longitudeInicial), new Distance(2.00)));
+            }
+            catch (Exception ex)
+            {
+                _logExceptionService.SubmitToInsights(ex);
+            }
         }
     }
 }

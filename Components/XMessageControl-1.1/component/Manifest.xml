@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="XMessageControl">
+  <name>XMessageControl</name>
+  <publisher>Softweb Solutions Inc.</publisher>
+  <publisher-url>http://www.softwebsolutions.com</publisher-url>
+  <version>1.1</version>
+  <summary>Cross Platform control to show messages with type like success, error, warning, info and also to show android style toast messages.</summary>
+  <screenshots>
+    <img src="screenshots/1.png" title="1" />
+    <img src="screenshots/2.png" title="2" />
+    <img src="screenshots/3.png" title="3" />
+    <img src="screenshots/4.png" title="4" />
+  </screenshots>
+  <samples>
+    <sample id="XMessageControl">
+      <name>XMessageControl Sample</name>
+      <summary>XMessageControl Sample</summary>
+    </sample>
+  </samples>
+</component>

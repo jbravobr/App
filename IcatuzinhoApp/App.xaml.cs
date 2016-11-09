@@ -2,7 +2,6 @@
 using Prism.Unity;
 using Microsoft.Practices.Unity;
 using Xamarin;
-using Xamarin.Forms;
 
 namespace IcatuzinhoApp
 {
@@ -49,25 +48,8 @@ namespace IcatuzinhoApp
                 Container.RegisterType<IVehicleService, VehicleService>();
                 Container.RegisterType<IWeatherService, WeatherService>();
 
-                // Registrando repositórios e dependências.
-                Container.RegisterType<IAuthenticationCodeRepository, AuthenticationCodeRepository>();
-                Container.RegisterType<IAuthenticationRepository, AuthenticationRepository>();
-                Container.RegisterType<IDriverRepository, DriverRepository>();
-                Container.RegisterType<IItineraryRepository, ItineraryRepository>();
-                Container.RegisterType<ILogExceptionRepository, LogExceptionRepository>();
-                Container.RegisterType<IScheduleRepository, ScheduleRepository>();
-                Container.RegisterType<IStationRepository, StationRepository>();
-                Container.RegisterType<ITransactionRepository, TransactionRepository>();
-                Container.RegisterType<ITravelRepository, TravelRepository>();
-                Container.RegisterType<IUserRepository, UserRepository>();
-                Container.RegisterType<IVehicleRepository, VehicleRepository>();
-                Container.RegisterType<IWeatherRepository, WeatherRepository>();
-
                 // Registrando Views para Navegação
                 Container.RegisterTypeForNavigation<LoginPage>();
-                Container.RegisterTypeForNavigation<HomePage>();
-                Container.RegisterTypeForNavigation<SchedulePage>();
-                Container.RegisterTypeForNavigation<TravelPage>();
                 Container.RegisterTypeForNavigation<SelectionPage>();
 
                 // 3rd Party Controlls

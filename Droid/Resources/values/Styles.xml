@@ -32,13 +32,13 @@
 		<item name="android:background">@color/actionbar_tab_indicator</item>
 	</style>
 	<!-- Splash styles -->
-	<!--<style name="Theme.Splash" parent="android:Theme">
+	<style name="Theme.Splash" parent="android:Theme">
 		<item name="android:windowBackground">@drawable/splash</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowIsTranslucent">false</item>
 		<item name="android:windowIsFloating">false</item>
 		<item name="android:backgroundDimEnabled">true</item>
-	</style>-->
+	</style>
 	<!-- Local copy of android:Theme.Holo.Dialog.Alert -->
 	<style name="HoloBaseDialogTheme" parent="@android:style/Theme.Holo.Light.Dialog">
 		<item name="android:windowBackground">@android:color/transparent</item>

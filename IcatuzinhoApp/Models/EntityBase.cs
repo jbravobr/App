@@ -1,15 +1,15 @@
 ﻿using System;
-using Realms;
+using SQLite.Net.Attributes;
 
 namespace IcatuzinhoApp
 {
 
-    public class EntityBase : RealmObject
+    public class EntityBase
     {
-        [ObjectId]
+        [PrimaryKey]
         public int Id { get; set; }
 
-        public DateTimeOffset DtRegister { get; set;}
+        public string DtRegister { get; } = DateTime.Now.ToString("G");
 
         public bool Status { get; set; }
     }
