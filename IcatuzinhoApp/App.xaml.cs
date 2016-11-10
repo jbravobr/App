@@ -49,8 +49,11 @@ namespace IcatuzinhoApp
                 Container.RegisterType<IWeatherService, WeatherService>();
 
                 // Registrando Views para Navegação
-                Container.RegisterTypeForNavigation<LoginPage>();
-                Container.RegisterTypeForNavigation<SelectionPage>();
+                Container.RegisterTypeForNavigation<HomePage>();
+				Container.RegisterTypeForNavigation<LoginPage>();
+				Container.RegisterTypeForNavigation<SchedulePage>();
+				Container.RegisterTypeForNavigation<SelectionPage>();
+				Container.RegisterTypeForNavigation<TravelPage>();
 
                 // 3rd Party Controlls
                 Container.RegisterInstance(Acr.UserDialogs.UserDialogs.Instance);

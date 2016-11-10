@@ -1,114 +1,95 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-		x:Class="IcatuzinhoApp.LoginPage" 
-		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-		prism:ViewModelLocator.AutowireViewModel="True"
-        xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp"
-		xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared" 
-		BackgroundColor="Black">
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="IcatuzinhoApp.LoginPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared"
+             xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             BackgroundColor="Black"
+             BackgroundImage="{StaticResource PasswordRecoveryBackgroundImage}"
+             Padding="20">
 
     <ContentPage.Resources>
-		 <ResourceDictionary>
+        <ResourceDictionary>
             <local:BooleanTriggerConverter x:Key="dataHasBeenEntered" />
         </ResourceDictionary>
-	</ContentPage.Resources>
-	
-	<ContentPage.Content>
-		<!-- MAIN CONTAINER -->
-		<Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand">
-	
-			<!-- BACKGROUND IMAGE -->
-			<Image Source="{ StaticResource PasswordRecoveryBackgroundImage }" 
-				IsOpaque="false" 
-				Aspect="AspectFill" 
-				HorizontalOptions="FillAndExpand" 
-				VerticalOptions="FillAndExpand" />
-			<ScrollView Orientation="Vertical">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="400" />
-						<RowDefinition Height="100" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-				
-					<StackLayout HorizontalOptions="Fill" 
-							VerticalOptions="StartAndExpand" 
-							Grid.Row="0">
-						<StackLayout.Padding>
-							<OnPlatform x:TypeArguments="Thickness">
-								<OnPlatform.iOS>20, 120, 20, 20</OnPlatform.iOS>
-								<OnPlatform.Android>20, 100, 20, 20</OnPlatform.Android>
-								<OnPlatform.WinPhone>20, 50, 20, 20</OnPlatform.WinPhone>
-							</OnPlatform>
-						</StackLayout.Padding>
-						<Image Source="{StaticResource BrandImage}" VerticalOptions="Start" />
-						<Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
-							<Label.FormattedText>
-							<FormattedString>
-								<FormattedString.Spans>
-									<Span Text="Estudo Mobilidade" FontSize="28" ForegroundColor="White" FontAttributes="Bold" />
-								</FormattedString.Spans>
-							</FormattedString>
-						</Label.FormattedText>
-						</Label>
-					</StackLayout>
-					
-					<!---FIELDS CONTAINER-->
-					<Grid Padding="40, 0" ColumnSpacing="0" RowSpacing="0" VerticalOptions="CenterAndExpand" Grid.Row="1" HeightRequest="160">
-						
-							<StackLayout Grid.Row="0" VerticalOptions="StartAndExpand">
-								<!---EMAIL FIELD-->
-								<Entry x:Name="entryEmail"
-								Placeholder="E-mail" 
-								Keyboard="Email" 
-								Text="{Binding Email}" 
-								Style="{DynamicResource ArtinaLoginEntryStyle}" 
-								IsEnabled="{Binding EmailIsEnabled}"/>
-							</StackLayout>
-							<!---PASSWORD FIELD-->
-							<StackLayout Grid.Row="2" VerticalOptions="StartAndExpand">
-								<Entry x:Name="entryPassword" 
-								Placeholder="Senha" 
-								Keyboard="Default" 
-								Text="{Binding Password}" 
-								IsPassword="true" 
-								Style="{DynamicResource ArtinaLoginEntryStyle}" 
-								VerticalOptions="StartAndExpand" 
-								IsEnabled="{Binding PasswordIsEnabled}"/>
-							</StackLayout>
-					</Grid>
-					
-					<!-- FOOTER -->
-					<StackLayout HorizontalOptions="Fill" VerticalOptions="EndAndExpand" Padding="20" Grid.Row="2">
-						<Button Style="{DynamicResource PrimaryActionButtonStyle}"
-								Command="{Binding Confirm}" 
-								VerticalOptions="End" 
-								Text="Entrar"
-								IsVisible="false"
-								IsEnabled="false">
-							<Button.Triggers>
-								<MultiTrigger TargetType="Button">
-                                    <MultiTrigger.Conditions>
-                                        <BindingCondition Binding="{Binding Source={x:Reference entryEmail},
-                                                                   Path=Text.Length,
-													               Converter={StaticResource dataHasBeenEntered}}"
-                                                               Value="true" />
-                                        <BindingCondition Binding="{Binding Source={x:Reference entryPassword},
-                                                                   Path=Text.Length,
-													               Converter={StaticResource dataHasBeenEntered}}"
-                                                               Value="true" />
-                                        </MultiTrigger.Conditions>
-        									 <Setter Property="IsVisible" Value="True" />
-                                             <Setter Property="IsEnabled" Value="True" />
-                                    </MultiTrigger>
-							</Button.Triggers>
-					    </Button>
-					</StackLayout>
-			
-				</Grid>
-		</ScrollView>
-		</Grid>
-	</ContentPage.Content>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackLayout Grid.Row="0"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="CenterAndExpand">
+
+                    <Image HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Source="{StaticResource BrandImage}" />
+
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span FontAttributes="Bold"
+                                          FontSize="28"
+                                          ForegroundColor="White"
+                                          Text="Icatuzinho" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <Grid Grid.Row="1"
+                      VerticalOptions="CenterAndExpand"
+                      ColumnSpacing="0"
+                      Padding="0"
+                      RowSpacing="0">
+
+                    <Grid.RowSpacing>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                    Android="20"
+                                    iOS="35" />
+                    </Grid.RowSpacing>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackLayout Grid.Row="0">
+                        <Entry x:Name="entryEmail"
+                               IsEnabled="{Binding EmailIsEnabled}"
+                               Keyboard="Email"
+                               Placeholder="E-mail"
+                               Style="{DynamicResource ArtinaLoginEntryStyle}"
+                               Text="{Binding Email}" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="1">
+                        <Entry x:Name="entryPassword"
+                               IsEnabled="{Binding PasswordIsEnabled}"
+                               IsPassword="true"
+                               Keyboard="Default"
+                               Placeholder="Senha"
+                               Style="{DynamicResource ArtinaLoginEntryStyle}"
+                               Text="{Binding Password}" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2">
+                        <Button VerticalOptions="End"
+                                Command="{Binding Confirm}"
+                                Style="{DynamicResource PrimaryActionButtonStyle}"
+                                Text="Entrar" />
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>
