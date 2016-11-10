@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Artina Exported Colors -->
-	<color name="AccentColor">#1e1e1e</color>
+	<!--<color name="AccentColor">#1e1e1e</color>
+	<color name="InverseTextColor">#FFFFFFFF</color>-->
+	<color name="AccentColor">#003E69</color>
 	<color name="InverseTextColor">#FFFFFFFF</color>
+	<color name="TabSelectedColor">#90CAF9</color>
 </resources>

@@ -26,30 +26,44 @@
 			-->
 			<!-- Export AccentColor -->
 			<!--<Color x:Key="AccentColor">#185e8a</Color>-->
-			<Color x:Key="AccentColor">Black</Color>
+			<Color x:Key="AccentColor">#003E69</Color>
 			<!-- Export InverseTextColor -->
 			<Color x:Key="InverseTextColor">White</Color>
 			<!-- STATIC IMAGES -->
-			<FileImageSource x:Key="HamburguerIcon">hamburguer_icon.png</FileImageSource>
-			<FileImageSource x:Key="WelcomeBackgroundImage">welcome_bg.jpg</FileImageSource>
+			<!--<FileImageSource x:Key="HamburguerIcon">hamburguer_icon.png</FileImageSource>
+			<FileImageSource x:Key="WelcomeBackgroundImage">welcome_bg.jpg</FileImageSource>-->
+			
 			<FileImageSource x:Key="BrandImage">logo.png</FileImageSource>
-			<FileImageSource x:Key="LoginBackgroundImage">signup_bg.png</FileImageSource>
-			<FileImageSource x:Key="SignUpBackgroundImage">signup_bg.png</FileImageSource>
-			<FileImageSource x:Key="PasswordRecoveryBackgroundImage">signup_bg.png</FileImageSource>
-			<FileImageSource x:Key="WalkthroughStepBackgroundImage0">walkthrough_bg_0.png</FileImageSource>
-			<FileImageSource x:Key="WalkthroughStepBackgroundImage1">walkthrough_bg_1.png</FileImageSource>
-			<FileImageSource x:Key="WalkthroughStepBackgroundImage2">walkthrough_bg_2.png</FileImageSource>
-			<FileImageSource x:Key="WalkthroughStepGenericPhoneBackgroundImage">walkthrough_generic_phone_bg</FileImageSource>
-			<FileImageSource x:Key="ThemeAvatarSample0Image">user_profile_0.jpg</FileImageSource>
-			<FileImageSource x:Key="ThemeAvatarSample1Image">user_profile_1.jpg</FileImageSource>
-			<FileImageSource x:Key="SocialHeaderBackgroundImage0">social_header_bg_0.png</FileImageSource>
-			<FileImageSource x:Key="SocialHeaderBackgroundImage1">social_header_bg_1.png</FileImageSource>
+            <FileImageSource x:Key="LineIcon" File="line.png" />
+			<FileImageSource x:Key="LoginBackgroundImage" File="login.png" />
+			<FileImageSource x:Key="SignUpBackgroundImage" File="login.png" />
+			<FileImageSource x:Key="PasswordRecoveryBackgroundImage" File="login.png" />
+			<FileImageSource x:Key="SocialHeaderBackgroundImage0" File="social_header_bg_1.jpg" />
+			<FileImageSource x:Key="SocialHeaderBackgroundImage1" File="social_header_bg_1.jpg" />
+			
 			<!-- COLORS -->
 			<Color x:Key="BrandColor">#ad1457</Color>
 			<Color x:Key="BrandColorLight">#ec407a</Color>
 			<Color x:Key="BrandColorLighter">#f06292</Color>
 			<Color x:Key="BrandColorDark">#c2185b</Color>
 			<Color x:Key="BrandColorDarker">#ad1457</Color>
+
+			<!-- Cor Padrão do Botão -->
+			<Color x:Key="ButtonGray">#84888B</Color>
+			<!-- Cor do botão de EMBARQUEI -->
+			<Color x:Key="ButtonEmbarquei">#119734</Color>
+			<!-- Cor do botão de DESEMBARQUEI -->
+			<Color x:Key="ButtonDesembarquei">#FF4040</Color>
+			<!-- Cor Padrão do Botão BRANCO -->
+			<Color x:Key="ButtonWhite">#FF4040</Color>
+			
+			<!-- Cor Padrão dos Textos internos de controles tipo Entry -->
+			<Color x:Key="EntryPlaceholderColor">#658AA4</Color>
+			
+			<!-- Cor Padrão das linhas de bordas dos controles tipo Entry -->
+			<Color x:Key="EntryBorderLineColor">#417498</Color>
+			<Color x:Key="EntryBorderLineColorFocused">#47a1ff</Color>
+
 			<!-- COMPLEMENT COLORS -->
 			<Color x:Key="ComplementColor">#384f63</Color>
 			<Color x:Key="ComplementColorDark">#272f36</Color>
@@ -154,6 +168,18 @@
 				</Setter>
 			</Style>
 			<!-- BASE STYLES -->
+			<Style x:Key="ButtonEntrar" TargetType="Button">
+				<Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+				<Setter Property="BackgroundColor" Value="White" />
+				<Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+				<Setter Property="HeightRequest" Value="50" />
+			</Style>
+
+			<Style x:Key="RoundedLoginButtonStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+                <Setter Property="BorderRadius" Value="22" />
+            </Style>
+			
 			<Style x:Key="FontIcon" TargetType="Label">
 				<Setter Property="FontFamily" Value="{x:Static artina:FontAwesome.FontName}" />
 			</Style>
@@ -250,6 +276,7 @@
 				<Setter Property="TextColor" Value="{StaticResource LabelButtonColor}" />
 				<Setter Property="HeightRequest" Value="{StaticResource BaseButtonHeight}" />
 			</Style>
+			
 			<!-- ENTRY FIELDS -->
 			<Style x:Key="ArtinaEntryStyle" TargetType="Entry">
 				<Setter Property="TextColor" Value="White" />
@@ -261,10 +288,23 @@
 					</Trigger>
 				</Style.Triggers>
 			</Style>
+			
 			<Style x:Key="LoginEntryStyle" TargetType="Entry">
 				<Setter Property="TextColor" Value="White" />
 				<Setter Property="BackgroundColor" Value="Transparent" />
 			</Style>
+
+			<Style x:Key="IcatuLoginEntryStyle" TargetType="Entry" BasedOn="{StaticResource LoginEntryStyle}">
+				<Setter Property="artina:EntryProperties.BorderStyle" Value="BottomLine" />
+				<Setter Property="artina:EntryProperties.BorderColor" Value="{ StaticResource EntryBorderLineColor }" />
+				<Setter Property="artina:EntryProperties.PlaceholderColor" Value="{ StaticResource EntryPlaceholderColor }" />
+				<Style.Triggers>
+					<Trigger TargetType="Entry" Property="IsFocused" Value="True">
+						<Setter Property="artina:EntryProperties.BorderColor" Value="{StaticResource EntryBorderLineColorFocused}" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+			
 			<Style x:Key="ArtinaLoginEntryStyle" TargetType="Entry" BasedOn="{ StaticResource LoginEntryStyle }">
 				<Setter Property="artina:EntryProperties.BorderStyle" Value="BottomLine" />
 				<Setter Property="artina:EntryProperties.BorderColor" Value="{ StaticResource TranslucidWhite }" />
