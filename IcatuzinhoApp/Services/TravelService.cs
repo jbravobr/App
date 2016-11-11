@@ -53,6 +53,40 @@ namespace IcatuzinhoApp
             }
         }
 
+		public async Task<int?> GetSeatsAvailableByTravel(int scheduleId)
+		{
+			try
+			{
+				var token = _auth.Get();
+
+				var clientCaller = _httpService.Init(token?.AccessToken);
+				var data = await clientCaller.GetAsync($"{Constants.TravelServiceAddress}{scheduleId}");
+
+				if (data != null && data.IsSuccessStatusCode)
+				{
+					_utils = new DTO<Travel>();
+					var travel = await _utils.ConvertSingleObjectFromJson(data.Content);
+
+					return travel.Vehicle.SeatsAvailable;
+				}
+
+				if (data != null && data.StatusCode == System.Net.HttpStatusCode.Forbidden)
+					UIFunctions.ShowErrorMessageToUI(Constants.MessageErroAuthentication);
+
+				if (data == null)
+					UIFunctions.ShowErrorMessageToUI();
+
+				return null;
+
+			}
+			catch (Exception ex)
+			{
+				_log.SubmitToInsights(ex);
+				UIFunctions.ShowErrorMessageToUI();
+				return null;
+			}
+		}
+
         public async Task<bool> DoCheckIn(int scheduleId, int userId)
         {
             try

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
+	[ImplementPropertyChanged]
 	public class SchedulePageViewModel : BasePageViewModel
 	{
 		readonly ITravelService _travelService;
@@ -81,26 +81,18 @@ namespace IcatuzinhoApp
 
 		public async Task GetUpdatedSeatsAvailableBySchedule()
 		{
-			var realm = Realm.GetInstance();
-
 			if (Travels == null && !Travels.Any())
 				return;
 
 			foreach (var item in Travels)
 			{
-				using (var tran = realm.BeginWrite())
+				try
 				{
-					try
-					{
-						item.Vehicle.SeatsAvailable = (int)await _travelService.GetSeatsAvailableByTravel(item.Schedule.Id);
-
-						tran.Commit();
-					}
-					catch (Exception ex)
-					{
-						SendToInsights(ex);
-						tran.Rollback();
-					}
+					item.Vehicle.SeatsAvailable = (int)await _travelService.GetSeatsAvailableByTravel(item.Schedule.Id);
+				}
+				catch (Exception ex)
+				{
+					SendToInsights(ex);
 				}
 			}
 		}
@@ -128,8 +120,6 @@ namespace IcatuzinhoApp
 			{
 				return new Command(async () =>
 					{
-						var realm = Realm.GetInstance();
-
 						try
 						{
 							IsRefreshing = true;
@@ -138,20 +128,13 @@ namespace IcatuzinhoApp
 							foreach (var id in ids)
 							{
 								var availableSeats = await _travelService.GetAvailableSeats(id);
-
-								using (var tran = realm.BeginWrite())
+								try
 								{
-									try
-									{
-										Travels.First(x => x.Id == id).Vehicle.SeatsAvailable = availableSeats;
-
-										tran.Commit();
-									}
-									catch (Exception ex)
-									{
-										SendToInsights(ex);
-										tran.Rollback();
-									}
+									Travels.First(x => x.Id == id).Vehicle.SeatsAvailable = availableSeats;
+								}
+								catch (Exception ex)
+								{
+									SendToInsights(ex);
 								}
 
 								if (TimeSpan.Compare(DateTime.Now.ToLocalTime().TimeOfDay, Travels.First(x => x.Id == id).Schedule.StartSchedule.ToLocalTime().TimeOfDay) <= 0)
@@ -181,53 +164,41 @@ namespace IcatuzinhoApp
 
 		void SetScheduleAvatar(bool available, Travel item)
 		{
-			var realm = Realm.GetInstance();
-
 			if (available)
-			{
-				using (var tran = realm.BeginWrite())
-				{
-					try
-					{
-						if (DateTime.Now.ToLocalTime().TimeOfDay <= item.Schedule.StartSchedule.ToLocalTime().TimeOfDay
-							&& !IsOval2Setup)
-						{
-							item.Schedule.StatusAvatar = "oval2.png";
-							item.Schedule.StatusDescription = "Embarque Liberado";
-							IsOval2Setup = true;
-						}
-						else
-						{
-							item.Schedule.StatusAvatar = "oval3.png";
-							item.Schedule.StatusDescription = "Embarque Fechado";
-						}
-
-						tran.Commit();
-						return;
-					}
-					catch (Exception ex)
-					{
-						base.SendToInsights(ex);
-						tran.Rollback();
-					}
-				}
-			}
-
-			using (var tran = realm.BeginWrite())
 			{
 				try
 				{
-					item.Schedule.StatusDescription = "Embarque Encerrado";
-					item.Schedule.StatusAvatar = "oval1.png";
+					if (DateTime.Now.ToLocalTime().TimeOfDay <= item.Schedule.StartSchedule.ToLocalTime().TimeOfDay
+						&& !IsOval2Setup)
+					{
+						item.Schedule.StatusAvatar = "oval2.png";
+						item.Schedule.StatusDescription = "Embarque Liberado";
+						IsOval2Setup = true;
+					}
+					else
+					{
+						item.Schedule.StatusAvatar = "oval3.png";
+						item.Schedule.StatusDescription = "Embarque Fechado";
+					}
 
-					tran.Commit();
 					return;
 				}
 				catch (Exception ex)
 				{
 					base.SendToInsights(ex);
-					tran.Rollback();
 				}
+			}
+
+			try
+			{
+				item.Schedule.StatusDescription = "Embarque Encerrado";
+				item.Schedule.StatusAvatar = "oval1.png";
+
+				return;
+			}
+			catch (Exception ex)
+			{
+				base.SendToInsights(ex);
 			}
 		}
 
