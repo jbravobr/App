@@ -1,75 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-		x:Class="IcatuzinhoApp.ScheduleItemTemplate"
-		xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared">
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="IcatuzinhoApp.ScheduleItemTemplate"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared">
 
-       <Grid Padding="0" VerticalOptions="FillAndExpand">
+    <Grid VerticalOptions="FillAndExpand" Padding="0">
+        <Grid.TranslationX>
+            <OnIdiom x:TypeArguments="x:Double">
+                <OnIdiom.Tablet>30</OnIdiom.Tablet>
+                <OnIdiom.Phone>10</OnIdiom.Phone>
+            </OnIdiom>
+        </Grid.TranslationX>
 
-		<Grid.TranslationX>
-			<OnIdiom x:TypeArguments="x:Double">
-				<OnIdiom.Tablet>30</OnIdiom.Tablet>
-				<OnIdiom.Phone>10</OnIdiom.Phone>
-			</OnIdiom>
-		</Grid.TranslationX>
-		
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-		<artina:CircleImage 
-            Source="busstop.png" 
-            Style="{ StaticResource Avatar }"
-            BorderThickness="10"
-			BorderColor="Red"
-            HeightRequest="50"
-            WidthRequest="50"
-            Aspect="AspectFill"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-			Grid.Column="0"/>
+        <Image Grid.Column="0"
+               WidthRequest="50"
+               HeightRequest="50"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Aspect="AspectFill"
+               Source="{Binding Schedule.StatusAvatar}" />
 
-		    <Grid Padding="10" Grid.Column="1" HorizontalOptions="Start">
-			    <Grid.RowDefinitions>
-				    <RowDefinition Height="*" />
-				    <RowDefinition Height="*" />
-			    </Grid.RowDefinitions>
+        <Grid Grid.Column="1"
+              Margin="10"
+              HorizontalOptions="Start">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-			    <Label
-                        Text="{ Binding TimeSchedule, StringFormat='{0:HH:mm}'}" 
-                        HorizontalOptions="StartAndExpand"
-                        TextColor="White"
-                        FontSize="18"
-					    FontAttributes="Bold"
-				        Grid.Row="0"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
 
-			    <Grid Padding="0" Grid.Row="1">
-				    <Grid.ColumnDefinitions>
-					    <ColumnDefinition Width="Auto" />
-					    <ColumnDefinition Width="*" />
-				    </Grid.ColumnDefinitions>
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalOptions="StartAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   Text="{Binding Schedule.StartSchedule.LocalDateTime,
+                                  StringFormat='{0:HH:mm}'}"
+                   TextColor="Black" />
 
-				      <Image 
-						Source="{Binding StatusAvatar}"
-						Aspect="AspectFill"
-						HorizontalOptions="Center"
-						VerticalOptions="Center"
-						HeightRequest="10"
-						WidthRequest="10"
-					    Grid.Column="0"/>
-				
-                      <Label Text="{Binding StatusDescription}"
-                        HorizontalOptions="Center"
-                        TextColor="White"
-                        FontSize="12"
-						Margin="2,0,5,0"
-                        Grid.Column="1"/>    
-				
-			    </Grid>
-              
-		    </Grid>
-		
-	   </Grid>
-	
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="2,0,5,0"
+                   HorizontalOptions="Center"
+                   FontSize="16"
+                   Text="{Binding Schedule.StatusDescription}"
+                   TextColor="{StaticResource EntryPlaceholderColor}" />
+        </Grid>
+    </Grid>
 </ContentView>

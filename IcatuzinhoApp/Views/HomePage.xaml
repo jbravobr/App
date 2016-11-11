@@ -114,28 +114,28 @@
 					Command="{Binding CheckIn}" 
 					IsVisible="{Binding isCheckIn}" 
 					VerticalOptions="End" 
-					Text="CHECK IN">
+					Text="EMBARQUEI">
 
-					<Button.WidthRequest>
+					<Button.HeightRequest>
 						<OnIdiom x:TypeArguments="x:Double">
-						<OnIdiom.Tablet>400</OnIdiom.Tablet>
-					</OnIdiom>
-					</Button.WidthRequest>
-					
+							<OnIdiom.Tablet>70</OnIdiom.Tablet>
+							<OnIdiom.Phone>50</OnIdiom.Phone>
+						</OnIdiom>
+					</Button.HeightRequest>
 				</Button>
 				
 				<Button Style="{DynamicResource TertiaryActionButtonStyle}" 
 					Command="{Binding CheckOut}" 
 					IsVisible="{Binding isCheckOut}" 
 					VerticalOptions="End" 
-					Text="CHECK OUT">
+					Text="DESEMBARQUEI">
 
-					<Button.WidthRequest>
+					<Button.HeightRequest>
 						<OnIdiom x:TypeArguments="x:Double">
-						<OnIdiom.Tablet>400</OnIdiom.Tablet>
-					</OnIdiom>
-					</Button.WidthRequest>
-					
+							<OnIdiom.Tablet>70</OnIdiom.Tablet>
+							<OnIdiom.Phone>50</OnIdiom.Phone>
+						</OnIdiom>
+					</Button.HeightRequest>
 				</Button>
 			</StackLayout>
 

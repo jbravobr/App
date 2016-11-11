@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PropertyChanged;
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace IcatuzinhoApp
@@ -25,6 +26,8 @@ namespace IcatuzinhoApp
 
         [ForeignKey(typeof(Vehicle))]
         public int VehicleId { get; set; }
+
+		[Ignore]
+		public string GetTemp { get; set; }
     }
 }
-

@@ -8,7 +8,7 @@ namespace IcatuzinhoApp
     [ImplementPropertyChanged]
     public class Schedule : EntityBase
     {
-        public string StartSchedule { get; set; }
+        public DateTimeOffset StartSchedule { get; set; }
 
         [JsonIgnore]
         [Ignore]
