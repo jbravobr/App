@@ -145,6 +145,7 @@
     <Folder Include="TriggerActions\" />
     <Folder Include="Views\Templates\" />
     <Folder Include="Utils\ToastEventType\" />
+    <Folder Include="CustomRenderes\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

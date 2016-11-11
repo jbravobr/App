@@ -202,12 +202,9 @@
     <None Include="Assets\Fonts\Lato\Lato-Regular.ttf" />
     <None Include="Assets\Fonts\Lato\OFL.txt" />
     <None Include="Assets\avatar.png" />
-    <None Include="Resources\ArticleImg.png" />
     <None Include="Resources\values\Colors.tt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values-v19\bools.xml" />
-    <AndroidResource Include="Resources\values-v21\Styles.xml" />
     <AndroidResource Include="Resources\drawable\hamburguer_icon.png" />
     <AndroidResource Include="Resources\drawable\icon.png" />
     <AndroidResource Include="Resources\drawable\logo.png" />
@@ -226,18 +223,18 @@
     <AndroidResource Include="Resources\drawable\social_header_bg_0.png" />
     <AndroidResource Include="Resources\drawable\social_header_bg_1.png" />
     <AndroidResource Include="Resources\drawable\more.png" />
-    <AndroidResource Include="Resources\drawable\bus_full.png" />
-    <AndroidResource Include="Resources\drawable\calendar.png" />
     <AndroidResource Include="Resources\drawable\login.png" />
     <AndroidResource Include="Resources\drawable\oval1.png" />
     <AndroidResource Include="Resources\drawable\oval2.png" />
     <AndroidResource Include="Resources\drawable\oval3.png" />
     <AndroidResource Include="Resources\drawable\line.png" />
+    <AndroidResource Include="Resources\drawable\house_full.png" />
+    <AndroidResource Include="Resources\drawable\calendar.png" />
+    <AndroidResource Include="Resources\drawable\bus_full.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Resources\layout\" />
-    <Folder Include="Renderes\" />
     <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
