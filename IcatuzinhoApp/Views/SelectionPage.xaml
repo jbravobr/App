@@ -1,36 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TabbedPage 
-		xmlns="http://xamarin.com/schemas/2014/forms" 
-		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-		x:Class="IcatuzinhoApp.SelectionPage"
-		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-        prism:ViewModelLocator.AutowireViewModel="True"
-		xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp">
+<?xml version="1.0" encoding="UTF-8" ?>
+<TabbedPage x:Class="IcatuzinhoApp.SelectionPage"
+            xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp"
+            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+            prism:ViewModelLocator.AutowireViewModel="True">
 
 	<NavigationPage>
 		<x:Arguments>
-    		<local:HomePage />
+			<local:HomePage />
 		</x:Arguments>
 		<NavigationPage.Icon>
-			<OnPlatform x:TypeArguments="FileImageSource" iOS="house_full.png" Android="house_full.png" />
-		</NavigationPage.Icon>      
+			<OnPlatform x:TypeArguments="FileImageSource"
+			            Android="house_full.png"
+			            iOS="house_full.png" />
+		</NavigationPage.Icon>
 	</NavigationPage>
 
 	<NavigationPage>
 		<x:Arguments>
-            <local:SchedulePage />
-        </x:Arguments>
+			<local:SchedulePage />
+		</x:Arguments>
 		<NavigationPage.Icon>
-			<OnPlatform x:TypeArguments="FileImageSource" iOS="calendar.png" Android="calendar.png" />
+			<OnPlatform x:TypeArguments="FileImageSource"
+			            Android="calendar.png"
+			            iOS="calendar.png" />
 		</NavigationPage.Icon>
 	</NavigationPage>
-	
+
 	<NavigationPage>
 		<x:Arguments>
 			<local:TravelPage />
 		</x:Arguments>
 		<NavigationPage.Icon>
-			<OnPlatform x:TypeArguments="FileImageSource" iOS="bus_full.png" Android="bus_full.png" />
-		</NavigationPage.Icon>      
+			<OnPlatform x:TypeArguments="FileImageSource"
+			            Android="bus_full.png"
+			            iOS="bus_full.png" />
+		</NavigationPage.Icon>
 	</NavigationPage>
 </TabbedPage>

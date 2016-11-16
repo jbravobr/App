@@ -1,9 +1,8 @@
 ﻿using System;
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace IcatuzinhoApp
 {
-
     public class EntityBase
     {
         [PrimaryKey]
@@ -14,4 +13,3 @@ namespace IcatuzinhoApp
         public bool Status { get; set; }
     }
 }
-

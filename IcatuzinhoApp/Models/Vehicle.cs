@@ -4,7 +4,6 @@ using SQLiteNetExtensions.Attributes;
 
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
     public class Vehicle : EntityBase
     {
         public int Number { get; set; }

@@ -1,11 +1,10 @@
 ﻿using System;
 using Newtonsoft.Json;
 using PropertyChanged;
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
     public class Schedule : EntityBase
     {
         public DateTimeOffset StartSchedule { get; set; }

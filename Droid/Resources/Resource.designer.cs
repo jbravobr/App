@@ -26,9 +26,6 @@ namespace IcatuzinhoApp.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::IcatuzinhoApp.Droid.Resource.String.ApplicationName;
-			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::IcatuzinhoApp.Droid.Resource.String.Hello;
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::IcatuzinhoApp.Droid.Resource.Attribute.actionBarSize;
 			global::AndroidHUD.Resource.Attribute.ahBarColor = global::IcatuzinhoApp.Droid.Resource.Attribute.ahBarColor;
 			global::AndroidHUD.Resource.Attribute.ahBarLength = global::IcatuzinhoApp.Droid.Resource.Attribute.ahBarLength;
 			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::IcatuzinhoApp.Droid.Resource.Attribute.ahBarWidth;
@@ -67,7 +64,7 @@ namespace IcatuzinhoApp.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::IcatuzinhoApp.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::IcatuzinhoApp.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::Splat.Resource.String.library_name = global::IcatuzinhoApp.Droid.Resource.String.library_name;
-			global::ModernHttpClient.Resource.String.library_name = global::IcatuzinhoApp.Droid.Resource.String.library_name;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::IcatuzinhoApp.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation
@@ -3415,12 +3412,6 @@ namespace IcatuzinhoApp.Droid
 		
 		public partial class String
 		{
-			
-			// aapt resource value: 0x7f070047
-			public const int ApplicationName = 2131165255;
-			
-			// aapt resource value: 0x7f070046
-			public const int Hello = 2131165254;
 			
 			// aapt resource value: 0x7f070031
 			public const int abc_action_bar_home_description = 2131165233;

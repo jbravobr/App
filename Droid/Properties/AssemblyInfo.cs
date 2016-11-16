@@ -29,9 +29,6 @@ using Xamarin.Forms;
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
 
-
-// Custom renderer definition.
-
 [assembly: ExportRenderer(typeof(Entry), typeof(UXDivers.Artina.Shared.ArtinaEntryRenderer))]
 [assembly: ExportRenderer(typeof(Editor), typeof(UXDivers.Artina.Shared.ArtinaEditorRenderer))]
 [assembly: ExportRenderer(typeof(Label), typeof(IcatuzinhoApp.Droid.CustomFontLabelRenderer))]
@@ -46,3 +43,4 @@ using Xamarin.Forms;
 [assembly: ExportRenderer(typeof(EntryCell), typeof(UXDivers.Artina.Shared.ArtinaEntryCellRenderer))]
 [assembly: ExportRenderer(typeof(SearchBar), typeof(UXDivers.Artina.Shared.ArtinaSearchBarRenderer))]
 
+[assembly: UsesFeature("android.hardware.wifi", Required = false)]

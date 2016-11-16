@@ -1,11 +1,10 @@
 ﻿using System;
 using PropertyChanged;
-using SQLite.Net.Attributes;
+using SQLite;
 using System.Collections.Generic;
 
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
     public class Transaction
     {
         public string Name { get; set; }

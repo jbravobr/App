@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Xamarin.Forms;
@@ -15,12 +15,9 @@ namespace IcatuzinhoApp
         double _longitudeInicial = -43.1707052;
 
         List<Station> _stations;
-        ILogExceptionService _logExceptionService;
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
-            var _userDialogsService = App._container.Resolve<IUserDialogs>();
-
             try
             {
                 if (App.MapLoaded == false)
@@ -32,16 +29,13 @@ namespace IcatuzinhoApp
                         iosMap = new CustomMap();
 
                     var model = BindingContext as TravelPageViewModel;
-                    var routes = model.Get();
+                    var routes = await model.Get();
 
-                    _stations = model.GetStations();
-
-                    if (_logExceptionService == null)
-                        _logExceptionService = App._container.Resolve<ILogExceptionService>();
+                    _stations = await model.GetStations();
 
                     if (_stations != null)
                     {
-                        _userDialogsService.ShowLoading();
+                        UserDialogs.Instance.ShowLoading();
 
                         if (_stations != null && _stations.Any())
                         {
@@ -77,7 +71,7 @@ namespace IcatuzinhoApp
                                          _stations.First().Longitude),
                                     Distance.FromMeters(1000)));
 
-                        _userDialogsService.HideLoading();
+                        UserDialogs.Instance.HideLoading();
 
                         if (Device.OS == TargetPlatform.iOS)
                         {
@@ -98,17 +92,14 @@ namespace IcatuzinhoApp
             }
             catch (Exception ex)
             {
-                _logExceptionService.SubmitToInsights(ex);
-                _userDialogsService.HideLoading();
+                LogExceptionHelper.SubmitToInsights(ex);
+                UserDialogs.Instance.HideLoading();
             }
         }
 
         public TravelPage()
         {
             InitializeComponent();
-
-            if (_logExceptionService == null)
-                _logExceptionService = App._container.Resolve<ILogExceptionService>();
 
             try
             {
@@ -117,7 +108,7 @@ namespace IcatuzinhoApp
             }
             catch (Exception ex)
             {
-                _logExceptionService.SubmitToInsights(ex);
+                LogExceptionHelper.SubmitToInsights(ex);
             }
         }
     }

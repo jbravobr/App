@@ -3,7 +3,6 @@ using PropertyChanged;
 
 namespace IcatuzinhoApp
 {
-    [ImplementPropertyChanged]
     public class Weather : EntityBase
     {
         public string Temp { get; set; }

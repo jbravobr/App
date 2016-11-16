@@ -8,21 +8,21 @@ namespace IcatuzinhoApp
 {
     public class TravelPageViewModel : BasePageViewModel
     {
-        IItineraryService _itineraryService;
-        IStationService _stationService;
+        IBaseService<Itinerary> _itineraryService;
+        IBaseService<Station> _stationService;
 
-        public TravelPageViewModel(IItineraryService itineraryService,
-                                   IStationService stationService)
+        public TravelPageViewModel(IBaseService<Itinerary> itineraryService,
+                                   IBaseService<Station> stationService)
         {
             _itineraryService = itineraryService;
             _stationService = stationService;
         }
 
-        public List<Itinerary> Get()
+        public async Task<List<Itinerary>> Get()
         {
             try
             {
-                var itens = _itineraryService.GetAllWithChildren();
+                var itens = await _itineraryService.GetAllWithChildren();
 
                 if (itens != null && itens.Any())
                     return itens;
@@ -36,9 +36,9 @@ namespace IcatuzinhoApp
             }
         }
 
-        public List<Station> GetStations()
+        public async Task<List<Station>> GetStations()
         {
-            var stations = _stationService.GetAllWithChildren();
+            var stations = await _stationService.GetAllWithChildren();
 
             if (stations != null && stations.Any())
                 return stations;
@@ -47,4 +47,3 @@ namespace IcatuzinhoApp
         }
     }
 }
-
