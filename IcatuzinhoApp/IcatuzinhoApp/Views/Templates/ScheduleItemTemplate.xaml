@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="IcatuzinhoApp.ScheduleItemTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared">
+
+    <Grid Padding="0" VerticalOptions="FillAndExpand">
+        <Grid.TranslationX>
+            <OnIdiom x:TypeArguments="x:Double">
+                <OnIdiom.Tablet>30</OnIdiom.Tablet>
+                <OnIdiom.Phone>10</OnIdiom.Phone>
+            </OnIdiom>
+        </Grid.TranslationX>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Image
+            Grid.Column="0"
+            Aspect="AspectFill"
+            HeightRequest="50"
+            HorizontalOptions="Center"
+            Source="{Binding Schedule.StatusAvatar}"
+            VerticalOptions="Center"
+            WidthRequest="50" />
+
+        <Grid
+            Grid.Column="1"
+            Margin="10"
+            HorizontalOptions="Start">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding Schedule.StartSchedule.LocalDateTime, StringFormat='{0:HH:mm}'}"
+                TextColor="Black" />
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="2,0,5,0"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="{Binding Schedule.StatusDescription}"
+                TextColor="{StaticResource EntryPlaceholderColor}" />
+        </Grid>
+    </Grid>
+</ContentView>
