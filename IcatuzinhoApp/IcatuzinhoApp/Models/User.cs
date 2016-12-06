@@ -1,13 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using PropertyChanged;
-using SQLite;
+using SQLite.Net.Attributes;
 
 namespace IcatuzinhoApp
 {
+    [ImplementPropertyChanged]
     public class User : EntityBase
     {
         public string Email { get; set; }
+
         public string Name { get; set; }
 
         [NotNull]

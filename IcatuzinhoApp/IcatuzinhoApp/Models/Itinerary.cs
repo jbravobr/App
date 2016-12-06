@@ -3,6 +3,7 @@ using PropertyChanged;
 
 namespace IcatuzinhoApp
 {
+    [ImplementPropertyChanged]
     public class Itinerary : EntityBase
     {
         public double Latitude { get; set; }

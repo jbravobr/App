@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="IcatuzinhoApp.SchedulePage"
+		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+        prism:ViewModelLocator.AutowireViewModel="True"
+		xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared" 
+        xmlns:templates="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp"
+        BackgroundColor="Black"
+		Title="Horários">
+	
+    <ContentPage.Content>
+
+            <StackLayout Padding="0">
+				<ListView 
+                    ItemsSource="{Binding Schedules}"
+                    RowHeight="66"
+				    CachingStrategy="RecycleElement"
+					x:Name="listViewSchedules"
+					SeparatorColor="Black">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <templates:ScheduleItemTemplate />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+					
+                </ListView>
+			</StackLayout>
+					
+    </ContentPage.Content>
+	
+</ContentPage>

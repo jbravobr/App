@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using PropertyChanged;
-using SQLite;
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace IcatuzinhoApp
 {
+    [ImplementPropertyChanged]
     public class Travel : EntityBase
     {
         [OneToOne(CascadeOperations = CascadeOperation.CascadeInsert | CascadeOperation.CascadeRead)]
@@ -26,7 +27,7 @@ namespace IcatuzinhoApp
         [ForeignKey(typeof(Vehicle))]
         public int VehicleId { get; set; }
 
-        [Ignore]
-        public string GetTemp { get; set; }
+		[Ignore]
+		public string GetTemp { get; set; }
     }
 }

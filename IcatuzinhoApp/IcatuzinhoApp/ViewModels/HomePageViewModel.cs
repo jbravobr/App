@@ -1,56 +1,68 @@
 ﻿using System;
-
-using Xamarin.Forms;
-
-using Acr.UserDialogs;
-using System.Threading.Tasks;
 using PropertyChanged;
-using Acr.Settings;
+using Acr.UserDialogs;
+using Xamarin.Forms;
+using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
 
 namespace IcatuzinhoApp
 {
     [ImplementPropertyChanged]
     public class HomePageViewModel : BasePageViewModel
     {
-        public string CurrentDate { get; private set; }
-        public string SeatsAvailable { get; private set; }
-        public string SeatsTotal { get; private set; }
-        public string Temp { get; private set; }
-        public string Time { get; private set; }
-        public string Description { get; private set; }
-        public bool isCheckIn { get; private set; }
-        public bool isCheckOut { get; private set; }
-        public string WeatherFontAwesome { get; private set; }
+        public string CurrentDate { get; set; }
+
+        public string SeatsAvailable { get; set; }
+
+        public string SeatsTotal { get; set; }
+
+        public string Temp { get; set; }
+
+        public string Time { get; set; }
+
+        public string Description { get; set; }
+
+        public bool isCheckIn { get; set; }
+
+        public bool isCheckOut { get; set; }
+
+        public string WeatherFontAwesome { get; set; }
+
         const string ZeroHours = "00";
+
         const string Minutes = "00";
-        public string TempIco { get; private set; }
 
         Travel _travel { get; set; }
 
-        readonly IBaseService<Travel> _travelService;
-        readonly IBaseService<Weather> _weatherService;
-        readonly IUserDialogs _userDialogs;
+        public string TempIco { get; set; }
 
-        public HomePageViewModel(IBaseService<Travel> travelService,
-                                 IBaseService<Weather> weatherService,
-                                 IUserDialogs userDialogs)
+        readonly ITravelService _travelService;
+
+        readonly IWeatherService _weatherService;
+
+        IUserDialogs _userDialogs { get; set; }
+
+        public HomePageViewModel(ITravelService travelService,
+                             IWeatherService weatherService)
         {
             _travelService = travelService;
             _weatherService = weatherService;
-            _userDialogs = userDialogs;
+            _userDialogs = App._container.Resolve<IUserDialogs>();
 
             isCheckIn = true;
             isCheckOut = false;
 
-            GetInfos().ConfigureAwait(false);
+            GetInfos();
+
         }
 
-        public async Task GetInfos()
+        public void GetInfos()
         {
             try
             {
                 _userDialogs.ShowLoading("Carregando");
-                _travel = await GetNextTravel();
+
+                _travel = GetNextTravel();
 
                 if (_travel != null)
                 {
@@ -80,7 +92,7 @@ namespace IcatuzinhoApp
 
                     Time = $"{_hours}:{_minutes}";
 
-                    var w = await GetWeather();
+                    var w = GetWeather();
                     TempIco = SetFontAwesomeForTemp(w.Ico);
                     Temp = w.Temp;
 
@@ -103,13 +115,13 @@ namespace IcatuzinhoApp
 
         public void ScheduleGetInfoForUI()
         {
-            Device.StartTimer(TimeSpan.FromSeconds(25), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
             {
                 Task.Factory.StartNew(() =>
                 {
                     Device.BeginInvokeOnMainThread(async () =>
                     {
-                        await GetInfos();
+                        GetInfos();
                         await UpdateSeats();
                         ScheduleGetInfoForUI();
                     });
@@ -133,9 +145,10 @@ namespace IcatuzinhoApp
                             return;
                         }
 
-                        _userDialogs.ShowLoading("Efetuando checkin");
+                        _userDialogs.ShowLoading("Carregando");
 
-                        var result = await _travelService.DoCheckin(_travel.Schedule.Id, Convert.ToInt32(Settings.Local.Get<string>("UserId")));
+                        var result = await _travelService.DoCheckIn(_travel.Schedule.Id, App.UserAuthenticated.Id);
+
                         if (result)
                         {
                             isCheckIn = false;
@@ -159,6 +172,7 @@ namespace IcatuzinhoApp
                     catch (Exception ex)
                     {
                         _userDialogs.HideLoading();
+
                         base.SendToInsights(ex);
                         UIFunctions.ShowErrorMessageToUI();
                     }
@@ -185,9 +199,9 @@ namespace IcatuzinhoApp
 
                         if (confirm)
                         {
-                            _userDialogs.ShowLoading("Efetuando checkout");
+                            _userDialogs.ShowLoading("Carregando");
 
-                            var result = await _travelService.DoCheckout(_travel.Schedule.Id, Convert.ToInt32(Settings.Local.Get<string>("UserId")));
+                            var result = await _travelService.DoCheckOut(_travel.Schedule.Id, App.UserAuthenticated.Id);
 
                             if (result)
                             {
@@ -213,6 +227,7 @@ namespace IcatuzinhoApp
                     catch (Exception ex)
                     {
                         _userDialogs.HideLoading();
+
                         base.SendToInsights(ex);
                         UIFunctions.ShowErrorMessageToUI();
                     }
@@ -222,17 +237,17 @@ namespace IcatuzinhoApp
 
         public async Task UpdateSeats()
         {
-            var result = await _travelService.GetWithChildrenById(_travel.Id);
+            var result = await _travelService.GetAvailableSeats(_travel.Id);
 
-            if (result.Vehicle.SeatsAvailable > 0)
+            if (result > 0)
                 SeatsAvailable = result.ToString();
         }
 
-        public async Task<Travel> GetNextTravel()
+        public Travel GetNextTravel()
         {
             //Expression<Func<Travel, bool>> bySchedule = (x) => x.Schedule.StartSchedule <= DateTime.Now;
             //var travel = await _travelService.GetWithChildrenAsync(bySchedule);
-            var travel = await _travelService.GetWithChildrenById(1);
+            var travel = _travelService.GetWithChildrenById(1);
 
             if (travel != null)
                 return travel;
@@ -240,9 +255,9 @@ namespace IcatuzinhoApp
             return null;
         }
 
-        public async Task<Weather> GetWeather()
+        public Weather GetWeather()
         {
-            return await _weatherService.Get();
+            return _weatherService.Get();
         }
 
         #region Label Text
@@ -296,3 +311,4 @@ namespace IcatuzinhoApp
         }
     }
 }
+

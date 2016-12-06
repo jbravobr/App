@@ -3,10 +3,11 @@ using PropertyChanged;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using SQLite;
+using SQLite.Net.Attributes;
 
 namespace IcatuzinhoApp
 {
+    [ImplementPropertyChanged]
     public class AuthenticationToken : EntityBase
     { 
         [JsonProperty(PropertyName="access_token")]

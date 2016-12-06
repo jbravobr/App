@@ -26,6 +26,9 @@ namespace IcatuzinhoApp.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::IcatuzinhoApp.Droid.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::IcatuzinhoApp.Droid.Resource.String.Hello;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::IcatuzinhoApp.Droid.Resource.Attribute.actionBarSize;
 			global::AndroidHUD.Resource.Attribute.ahBarColor = global::IcatuzinhoApp.Droid.Resource.Attribute.ahBarColor;
 			global::AndroidHUD.Resource.Attribute.ahBarLength = global::IcatuzinhoApp.Droid.Resource.Attribute.ahBarLength;
 			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::IcatuzinhoApp.Droid.Resource.Attribute.ahBarWidth;
@@ -64,9 +67,13 @@ namespace IcatuzinhoApp.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::IcatuzinhoApp.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::IcatuzinhoApp.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::Splat.Resource.String.library_name = global::IcatuzinhoApp.Droid.Resource.String.library_name;
+<<<<<<< HEAD:IcatuzinhoApp/IcatuzinhoApp.Droid/Resources/Resource.Designer.cs
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::IcatuzinhoApp.Droid.Resource.String.ApplicationName;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::IcatuzinhoApp.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::IcatuzinhoApp.Droid.Resource.Attribute.actionBarSize;
+=======
+			global::ModernHttpClient.Resource.String.library_name = global::IcatuzinhoApp.Droid.Resource.String.library_name;
+>>>>>>> parent of 83fb4ec... Atualização de pacotes e refactoring:Droid/Resources/Resource.designer.cs
 		}
 		
 		public partial class Animation
@@ -3412,6 +3419,7 @@ namespace IcatuzinhoApp.Droid
 		public partial class String
 		{
 			
+<<<<<<< HEAD:IcatuzinhoApp/IcatuzinhoApp.Droid/Resources/Resource.Designer.cs
 			// aapt resource value: 0x7f060047
 			public const int ApplicationName = 2131099719;
 			
@@ -3420,6 +3428,16 @@ namespace IcatuzinhoApp.Droid
 			
 			// aapt resource value: 0x7f06002e
 			public const int abc_action_bar_home_description = 2131099694;
+=======
+			// aapt resource value: 0x7f070047
+			public const int ApplicationName = 2131165255;
+			
+			// aapt resource value: 0x7f070046
+			public const int Hello = 2131165254;
+			
+			// aapt resource value: 0x7f070031
+			public const int abc_action_bar_home_description = 2131165233;
+>>>>>>> parent of 83fb4ec... Atualização de pacotes e refactoring:Droid/Resources/Resource.designer.cs
 			
 			// aapt resource value: 0x7f06002f
 			public const int abc_action_bar_home_description_format = 2131099695;

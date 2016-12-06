@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="IcatuzinhoApp.HomePage" 
+		xmlns:local="clr-namespace:IcatuzinhoApp;assembly=IcatuzinhoApp"
+		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+        prism:ViewModelLocator.AutowireViewModel="True"
+		xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared" 
+		BackgroundColor="Black"
+		Title="Próxima Partida">
+
+	<ContentPage.Content>
+		<Grid Padding="0">
+
+			<!-- BACKGROUND IMAGE -->
+			<Image Source="{ StaticResource SocialHeaderBackgroundImage1 }" 
+				IsOpaque="false" 
+				Opacity="0.75" 
+				Aspect="AspectFill" 
+				HorizontalOptions="FillAndExpand" 
+				VerticalOptions="FillAndExpand" />
+
+			<!-- TOOLBAR -->
+			<Grid VerticalOptions="StartAndExpand" Style="{StaticResource ToolbarStyle}" BackgroundColor="{StaticResource TranslucidBlack}" Padding="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Label Text="{Binding GetCurrentDate}" 
+						Grid.Column="0" 
+						HorizontalTextAlignment="Center" 
+						VerticalTextAlignment="Center"
+						FontSize="16"                  
+						FontFamily="{x:Static artina:FontAwesome.FontName}"
+						TextColor="White">
+				</Label>
+
+				<Label Text="{Binding GetSeats}" 
+						Grid.Column="1" 
+						HorizontalTextAlignment="Center" 
+						VerticalTextAlignment="Center"
+						FontSize="16"                  
+                        FontFamily="{x:Static artina:FontAwesome.FontName}"
+						TextColor="White"
+						x:Name="labelSeats">
+
+					<!--<Label.Triggers>
+						<EventTrigger Event="PropertyChanged">
+                            <local:LabelScaleTriggerAction />
+                        </EventTrigger>
+					</Label.Triggers>-->
+					
+				</Label>
+
+				<Label Text="{Binding GetTemp}" 
+						Grid.Column="2" 
+						HorizontalTextAlignment="Center" 
+						VerticalTextAlignment="Center"
+						FontSize="16"                  
+                        FontFamily="{x:Static artina:FontAwesome.FontName}"
+						TextColor="White">
+				</Label>
+			</Grid>
+
+			<Grid HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20, 0">
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				
+				<!-- TIME -->
+				<Label Text="{Binding GetTime}" 
+						Grid.Row="0" 
+						HorizontalTextAlignment="Center" 
+						VerticalTextAlignment="Center"
+						FontSize="48"                  
+                        FontFamily="{x:Static artina:FontAwesome.FontName}"
+						TextColor="White">
+				</Label>
+
+				<!-- DESCRIPTION -->
+				<Label Grid.Row="1" 
+						TextColor="White" 
+						HorizontalTextAlignment="Center" 
+						VerticalTextAlignment="Center"
+					    Text="{Binding Description}" 
+						FontSize="16">
+				</Label>
+				
+			</Grid>
+			
+
+			<!-- CHECK IN AND CHECK OUT BUTTON -->
+			<StackLayout Padding="20">
+				<StackLayout.VerticalOptions>
+					<OnIdiom x:TypeArguments="LayoutOptions">
+						<OnIdiom.Tablet>EndAndExpand</OnIdiom.Tablet>
+						<OnIdiom.Phone>EndAndExpand</OnIdiom.Phone>
+					</OnIdiom>
+				</StackLayout.VerticalOptions>
+
+				<StackLayout.HorizontalOptions>
+					<OnIdiom x:TypeArguments="LayoutOptions">
+						<OnIdiom.Tablet>CenterAndExpand</OnIdiom.Tablet>
+						<OnIdiom.Phone>Fill</OnIdiom.Phone>
+					</OnIdiom>
+				</StackLayout.HorizontalOptions>
+
+				<Button Style="{DynamicResource SecondaryActionButtonStyle}" 
+					Command="{Binding CheckIn}" 
+					IsVisible="{Binding isCheckIn}" 
+					VerticalOptions="End" 
+					Text="EMBARQUEI">
+
+					<Button.HeightRequest>
+						<OnIdiom x:TypeArguments="x:Double">
+							<OnIdiom.Tablet>70</OnIdiom.Tablet>
+							<OnIdiom.Phone>50</OnIdiom.Phone>
+						</OnIdiom>
+					</Button.HeightRequest>
+				</Button>
+				
+				<Button Style="{DynamicResource TertiaryActionButtonStyle}" 
+					Command="{Binding CheckOut}" 
+					IsVisible="{Binding isCheckOut}" 
+					VerticalOptions="End" 
+					Text="DESEMBARQUEI">
+
+					<Button.HeightRequest>
+						<OnIdiom x:TypeArguments="x:Double">
+							<OnIdiom.Tablet>70</OnIdiom.Tablet>
+							<OnIdiom.Phone>50</OnIdiom.Phone>
+						</OnIdiom>
+					</Button.HeightRequest>
+				</Button>
+			</StackLayout>
+
+		</Grid>
+		
+	</ContentPage.Content>
+</ContentPage>
