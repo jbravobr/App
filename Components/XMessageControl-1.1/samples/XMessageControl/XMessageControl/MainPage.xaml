@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XMessageControl.Shared.MainPage" BackgroundColor="White">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"  iOS="0, 20, 0, 0"   />                
+  </ContentPage.Padding>
+  <StackLayout>
+    <Label Text="Home Page" XAlign="Center" HeightRequest="55" YAlign="Center" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="Teal"></Label>
+    <Grid  RowSpacing="6" Padding="0,5" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Teal">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="0.5" />
+        <RowDefinition Height="Auto" />
+           </Grid.RowDefinitions>
+      <Button  BackgroundColor="Teal"  TextColor="White" HorizontalOptions="Start" BorderRadius="0"  BorderWidth="0" Text="Show Message Demo" x:Name="btnopenMessagePage">
+      </Button>
+      <BoxView Color="White" BackgroundColor="Gray" Grid.Row="1">
+      </BoxView>
+      <Button BackgroundColor="Teal" TextColor="White" HorizontalOptions="Start" Grid.Row="2" BorderRadius="0"  BorderWidth="0" Text="Show Toast Demo" x:Name="btnOpenToastPage">
+      </Button>
+    </Grid>
+  </StackLayout>
+</ContentPage>

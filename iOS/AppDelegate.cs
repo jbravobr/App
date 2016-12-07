@@ -26,6 +26,8 @@ namespace IcatuzinhoApp.iOS
             Xamarin.Calabash.Start();
 #endif
             global::Xamarin.Forms.Forms.Init();
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+            SQLitePCL.Batteries.Init();
             Xamarin.FormsMaps.Init();
             Appearance.Configure();
             LoadApplication(new App());

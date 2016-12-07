@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XMessageControl.Shared.MessageControlPage" BackgroundColor="White">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"  iOS="0, 20, 0, 0"   />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="Message Control Demo" HeightRequest="55" XAlign="Center" YAlign="Center" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="Teal"></Label>
+      <Grid VerticalOptions="StartAndExpand" Padding="0,10" RowSpacing="6"  HorizontalOptions="FillAndExpand" BackgroundColor="Teal">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="0.5" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="0.5" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="0.5" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="0.5" />
+          <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button VerticalOptions="CenterAndExpand"    BorderWidth="0" BackgroundColor="Teal" TextColor="White" HorizontalOptions="Start" BorderRadius="0" Text="Show Info Message" x:Name="btnInfomessage">
+        </Button>
+        <BoxView Color="White" BackgroundColor="Gray" Grid.Row="1">
+        </BoxView>
+        <Button VerticalOptions="CenterAndExpand" BorderWidth="0" BackgroundColor="Teal" TextColor="White" HorizontalOptions="Start" Grid.Row="2" BorderRadius="0" Text="Show Success Message" x:Name="btnSuccessmessage">
+        </Button>
+        <BoxView Color="White" BackgroundColor="Gray" Grid.Row="3">
+        </BoxView>
+        <Button VerticalOptions="CenterAndExpand" BorderWidth="0" BackgroundColor="Teal" TextColor="White" HorizontalOptions="Start" Grid.Row="4" BorderRadius="0" Text="Show Error Message" x:Name="btnErrormessage">
+        </Button>
+        <BoxView Color="White" BackgroundColor="Gray" Grid.Row="5">
+        </BoxView>
+        <Button VerticalOptions="CenterAndExpand" BorderWidth="0" BackgroundColor="Teal" TextColor="White" HorizontalOptions="Start" Grid.Row="6" BorderRadius="0" Text="Show Warning Message" x:Name="btnWarningmessage">
+        </Button>
+        <BoxView Color="White" BackgroundColor="Gray" Grid.Row="7">
+        </BoxView>
+        <Button VerticalOptions="CenterAndExpand" BorderWidth="0" BackgroundColor="Teal" TextColor="White" HorizontalOptions="Start" Grid.Row="8" BorderRadius="0" Text="Show Message With Customization" x:Name="btnCustomizationmessage">
+        </Button>    
+      </Grid>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

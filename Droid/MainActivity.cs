@@ -3,6 +3,7 @@ using Android.OS;
 using Xamarin.Forms.Platform.Android;
 using Acr.UserDialogs;
 using Xamarin;
+using System.Net;
 
 namespace IcatuzinhoApp.Droid
 {
@@ -20,10 +21,10 @@ namespace IcatuzinhoApp.Droid
             FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
             FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
 
+
             base.OnCreate(bundle);
 
             Xamarin.FormsMaps.Init(this, bundle);
-
             Xamarin.Insights.HasPendingCrashReport += (sender, isStartupCrash) =>
                 {
                     if (isStartupCrash)
@@ -35,33 +36,8 @@ namespace IcatuzinhoApp.Droid
             Xamarin.Insights.Initialize("af73d7945c2d65a46435cb2f6441453f416e9b43", this);
 #endif
             UserDialogs.Init(this);
-
             Xamarin.Forms.Forms.Init(this, bundle);
-
-            /*
-
-            Uncomment to remove StatusBar in Android
-            
-            Window.AddFlags(WindowManagerFlags.Fullscreen);
-            Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
-            */
-
             LoadApplication(new App());
-
-
-#pragma warning disable 618
-            // Hiding ActionBar Icon on Android versions using Material Design
-            //if ((int)Android.OS.Build.VERSION.SdkInt >= 21)
-            //{
-            //ActionBar.SetIcon(
-            //new ColorDrawable(
-            //Resources.GetColor(Android.Resource.Color.Transparent)
-            //)
-            //);
-            //}
-#pragma warning restore 618
         }
     }
 }
-
-
