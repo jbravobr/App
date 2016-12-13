@@ -11,9 +11,11 @@
 			<local:HomePage />
 		</x:Arguments>
 		<NavigationPage.Icon>
+			
 			<OnPlatform x:TypeArguments="FileImageSource"
 			            Android="house_full.png"
-			            iOS="house_full.png" />
+					iOS="house_full.png"
+			             />
 		</NavigationPage.Icon>
 	</NavigationPage>
 

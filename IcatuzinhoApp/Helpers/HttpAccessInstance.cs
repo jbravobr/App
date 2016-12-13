@@ -52,5 +52,21 @@ namespace IcatuzinhoApp
                 return _httpClient;
             }
         }
+
+		public static HttpClient GetClientWithNewToken
+		{
+			get
+			{
+				
+					lock (syncLock)
+					{
+						
+							instance = new HttpAccessInstance();
+					}
+				
+
+				return _httpClient;
+			}
+		}
     }
 }

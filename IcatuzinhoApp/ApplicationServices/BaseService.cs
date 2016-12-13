@@ -41,6 +41,9 @@ namespace IcatuzinhoApp
 
                 if (typeof(T) == typeof(Travel))
                     path = Constants.TravelServiceAddress;
+				if (typeof(T) == typeof(Weather))
+					path = Constants.WeatherServiceAddress;
+
 
                 return path;
             }
@@ -213,7 +216,8 @@ namespace IcatuzinhoApp
             {
                 try
                 {
-                    var data = await App.httpClient.GetAsync(string.IsNullOrEmpty(optionalRoute) ? GetRightServicePath : optionalRoute);
+					var url = string.IsNullOrEmpty(optionalRoute) ? GetRightServicePath : optionalRoute;
+					var data = await App.httpClient.GetAsync($"{(url)}{pkId}");
 
                     if (data != null && data.IsSuccessStatusCode)
                     {
@@ -264,7 +268,15 @@ namespace IcatuzinhoApp
         /// <param name="entity">Entity.</param>
         public async Task InsertOrReplaceWithChildren(T entity)
         {
-            await Task.Run(() => _repo.InsertOrReplaceWithChildren(entity));
+			try
+			{
+				await Task.Run(() => _repo.InsertOrReplaceWithChildren(entity));
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
         }
 
         /// <summary>
@@ -503,6 +515,8 @@ namespace IcatuzinhoApp
                     var authenticationToken = JsonConvert.DeserializeObject<AuthenticationToken>(jsonString);
                     Settings.Local.Set<string>("AccessToken", authenticationToken.AccessToken);
 
+					App.httpClient = HttpAccessInstance.GetClientWithNewToken;
+
                     return true;
                 }
 
@@ -524,5 +538,114 @@ namespace IcatuzinhoApp
                 return false;
             }
         }
-    }
+
+		public async Task<User> GetUserByLogin(string login, string password)
+		{
+			if (await Connectivity.IsNetworkingOK())
+			{
+				try
+				{
+					var data = await App.httpClient.GetAsync($"{GetRightServicePath}{login}");
+
+					if (data != null && data.IsSuccessStatusCode)
+					{
+						var dto = new DTO<T>();
+						var entity = await dto.ConvertSingleObjectFromJson(data.Content);
+
+						if (entity != null)
+						{
+							(entity as User).Password = password;
+							await InsertOrReplaceWithChildren(entity);
+						}
+					}
+
+					if (data != null && data.StatusCode == System.Net.HttpStatusCode.Forbidden)
+					{
+						UIFunctions.ShowErrorMessageToUI(Constants.MessageErroAuthentication);
+						return null;
+					}
+
+					if (data == null)
+					{
+						UIFunctions.ShowErrorMessageToUI();
+						return null;
+					}
+
+				}
+				catch (Exception ex)
+				{
+					LogExceptionHelper.SubmitToInsights(ex);
+					UIFunctions.ShowErrorMessageToUI();
+					return null;
+				}
+			}
+
+			return null;
+		}
+
+		public async Task<T> GetNextSchedule()
+		{
+			try
+			{
+				var schedules = _repo.GetAll();
+				if (schedules == null || !schedules.Any())
+				{
+					schedules = await GetAll();
+				}
+				return schedules.FirstOrDefault(x => (x as Schedule).StartSchedule.TimeOfDay >= DateTime.Now.TimeOfDay);
+			}
+			catch (Exception ex)
+			{
+				LogExceptionHelper.SubmitToInsights(ex);
+				UIFunctions.ShowErrorMessageToUI();
+				return null;
+			}
+		}
+
+		public async Task<Travel> GetTravelByScheduleId(int scheduleId)
+		{
+			
+				try
+				{
+					
+				var data = await App.httpClient.GetAsync($"{GetRightServicePath}{scheduleId}");
+
+					if (data != null && data.IsSuccessStatusCode)
+					{
+						var dto = new DTO<T>();
+						var entity =  await dto.ConvertSingleObjectFromJson(data.Content);
+
+						(entity as Travel).ScheduleId = scheduleId;
+
+						if (entity != null)
+							await InsertOrReplaceWithChildren(entity);
+					}
+
+					if (data != null && data.StatusCode == System.Net.HttpStatusCode.Forbidden)
+					{
+						UIFunctions.ShowErrorMessageToUI(Constants.MessageErroAuthentication);
+						return null;
+					}
+
+					if (data == null)
+					{
+						UIFunctions.ShowErrorMessageToUI();
+						return null;
+					}
+
+					var all = _repo.GetAllWithChildren();
+
+				var trav =(all as List<Travel>).FirstOrDefault(x => x.ScheduleId == scheduleId);
+				return trav;
+
+				}
+				catch (Exception ex)
+				{
+					LogExceptionHelper.SubmitToInsights(ex);
+					UIFunctions.ShowErrorMessageToUI();
+					return null;
+				}
+
+		}
+	}
 }

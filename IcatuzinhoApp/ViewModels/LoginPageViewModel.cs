@@ -85,7 +85,7 @@ namespace IcatuzinhoApp
                     Tracks.TrackLoginInformation();
                     _userDialogs.HideLoading();
 
-                    await NavigateCommand.Execute();
+					Navigate();
                 }
                 else
                     _userDialogs.HideLoading();
@@ -124,7 +124,7 @@ namespace IcatuzinhoApp
                            await RegisterLocalAuthenticatedUser();
 
                            _userDialogs.HideLoading();
-                           await NavigateCommand.Execute();
+						   Navigate();
                        }
                        else
                        {
@@ -146,15 +146,17 @@ namespace IcatuzinhoApp
 
         public async Task RegisterLocalAuthenticatedUser()
         {
-            var user = await _userService.GetAll();
-            if (user != null && user.Any())
+			var user = await _userService.GetUserByLogin(Email, Password);
+            if (user != null )
             {
-                Settings.Local.Set<string>("UserName", user.FirstOrDefault().Name);
+                Settings.Local.Set<string>("UserName", user.Name);
                 Settings.Local.Set<string>("UserPassword", Password);
-                Settings.Local.Set<string>("UserId", user.FirstOrDefault().Id.ToString());
+                Settings.Local.Set<string>("UserId", user.Id.ToString());
                 Settings.Local.Set<string>("UserEmail", Email);
                 Settings.Local.Set<bool>("UserLogged", true);
             }
+
+	
         }
 
         public async Task InsertTravels()
@@ -177,7 +179,7 @@ namespace IcatuzinhoApp
         async void Navigate()
         {
             try
-            {
+            {											
                 await _navigationService.NavigateAsync("SelectionPage");
             }
             catch (Exception ex)

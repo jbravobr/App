@@ -11,7 +11,7 @@ namespace IcatuzinhoApp
         public const string TravelServiceCheckInAddress = "icatuzinhoapi/api/travel/checkin/";
         public const string TravelServiceCheckOutAddress = "icatuzinhoapi/api/travel/checkout/";
         public const string WeatherServiceAddress = "icatuzinhoapi/api/weather/";
-        public const string WeatherAuthServiceAddress = "icatuzinhoapi/api/weatherAuth/";
+        ///public const string WeatherAuthServiceAddress = "icatuzinhoapi/api/weatherAuth/";
         public const string TravelServiceAvailableSeats = "icatuzinhoapi/api/travel/availableseats/";
         public const string FormsAuthentication = "icatuzinhoapi/api/auth";
 

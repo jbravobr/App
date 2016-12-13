@@ -26,12 +26,22 @@ namespace IcatuzinhoApp
 
         Task<bool> DoCheckin(int scheduleId, int userId);
         Task<bool> DoCheckout(int scheduleId, int userId);
+		Task<Travel> GetTravelByScheduleId(int scheduleId);
 
-        #endregion
+		#endregion
+
+
+		#region Schedule Specific Operations
+
+		Task<T> GetNextSchedule();
+
+		#endregion
 
         #region Login Specific Operations
 
         Task<bool> Login(string email, string password);
+
+		Task<User> GetUserByLogin(string login, string password);
 
         #endregion
     }

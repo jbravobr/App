@@ -1,9 +1,11 @@
 using System;
 using Xamarin.Forms;
 using SQLiteNetExtensions.Extensions;
+using SQLiteNetExtensions;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IcatuzinhoApp
 {
@@ -37,7 +39,7 @@ namespace IcatuzinhoApp
                     App.conn.CreateTable<Vehicle>();
                     App.conn.CreateTable<Weather>();
                     App.conn.CreateTable<Itinerary>();
-                }
+                }                            
             }
             catch (Exception ex)
             {
@@ -54,7 +56,9 @@ namespace IcatuzinhoApp
             {
                 try
                 {
-                    App.conn.InsertOrReplaceWithChildren(entity, recursive: true);
+                   
+                    ////SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceWithChildren(App.conn, entity, recursive: true);
+                   App.conn.InsertOrReplaceWithChildren(entity, recursive: true);
                     return true;
                 }
                 catch (Exception ex)
@@ -118,7 +122,7 @@ namespace IcatuzinhoApp
 
                     foreach (var entity in entities)
                     {
-                        App.conn.Delete(entity, recursive: false);
+                        App.conn.Delete(entity,  recursive: false);
                     }
 
                     return true;
@@ -275,7 +279,7 @@ namespace IcatuzinhoApp
             try
             {
                 lock (_lock)
-                    return App.conn.Table<T>().Count() > 0;
+                    return (App.conn.Table<T>().ToList()).Count() > 0;
 
             }
             catch (Exception ex)
@@ -284,6 +288,7 @@ namespace IcatuzinhoApp
                 return false;
             }
         }
-    }
+
+	}
 }
 

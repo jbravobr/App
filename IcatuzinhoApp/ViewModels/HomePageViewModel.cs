@@ -29,16 +29,18 @@ namespace IcatuzinhoApp
 
         readonly IBaseService<Travel> _travelService;
         readonly IBaseService<Weather> _weatherService;
+		readonly IBaseService<Schedule> _scheculeService;
         readonly IUserDialogs _userDialogs;
 
         public HomePageViewModel(IBaseService<Travel> travelService,
                                  IBaseService<Weather> weatherService,
+		                         IBaseService<Schedule> scheduleService,
                                  IUserDialogs userDialogs)
         {
             _travelService = travelService;
             _weatherService = weatherService;
             _userDialogs = userDialogs;
-
+			_scheculeService = scheduleService;
             isCheckIn = true;
             isCheckOut = false;
 
@@ -70,13 +72,13 @@ namespace IcatuzinhoApp
                     SeatsTotal = _travel.Vehicle.SeatsTotal.ToString();
                     Description = _travel.Schedule.Message;
 
-                    var _hours = Convert.ToDateTime(_travel.Schedule.StartSchedule).Hour == 0 ?
+                    var _hours = _travel.Schedule.StartSchedule.Hour == 0 ?
                                         ZeroHours :
-                                        Convert.ToDateTime(_travel.Schedule.StartSchedule).Hour.ToString();
+                                        _travel.Schedule.StartSchedule.Hour.ToString();
 
-                    var _minutes = Convert.ToDateTime(_travel.Schedule.StartSchedule).Minute == 0 ?
+                    var _minutes = _travel.Schedule.StartSchedule.Minute == 0 ?
                                           Minutes :
-                                          Convert.ToDateTime(_travel.Schedule.StartSchedule).Minute.ToString();
+                                          _travel.Schedule.StartSchedule.Minute.ToString();
 
                     Time = $"{_hours}:{_minutes}";
 
@@ -230,14 +232,25 @@ namespace IcatuzinhoApp
 
         public async Task<Travel> GetNextTravel()
         {
-            //Expression<Func<Travel, bool>> bySchedule = (x) => x.Schedule.StartSchedule <= DateTime.Now;
-            //var travel = await _travelService.GetWithChildrenAsync(bySchedule);
-            var travel = await _travelService.GetWithChildrenById(1);
+			try
+			{
+				//Expression<Func<Travel, bool>> bySchedule = (x) => x.Schedule.StartSchedule <= DateTime.Now;
+				//var travel = await _travelService.GetWithChildrenAsync(bySchedule);
+				var schedule = await _scheculeService.GetNextSchedule();
 
-            if (travel != null)
-                return travel;
+				var travel = await _travelService.GetTravelByScheduleId(schedule.Id);
 
-            return null;
+
+				if (travel != null)
+					return travel;
+
+				return null;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+	
         }
 
         public async Task<Weather> GetWeather()
