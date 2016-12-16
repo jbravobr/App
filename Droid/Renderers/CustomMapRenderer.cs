@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Views;
 using IcatuzinhoApp;
 using IcatuzinhoApp.Droid;
 using Xamarin.Forms;
@@ -16,7 +17,7 @@ namespace IcatuzinhoApp.Droid
         GoogleMap map;
         List<Position> routeCoordinates;
 
-        protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<View> e)
+        protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
 
@@ -48,6 +49,10 @@ namespace IcatuzinhoApp.Droid
 
             map.AddPolyline(polylineOptions);
         }
-    }
-}
 
+		public Android.Views.View GetInfoContents(Marker marker)
+		{
+			throw new NotImplementedException();
+		}
+	}
+}
